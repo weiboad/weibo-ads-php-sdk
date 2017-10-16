@@ -18,8 +18,8 @@ Add the following configuration to your `composer.json` file:
 ```json   
 {
   "respositories" : [
-    "type" : "git",
-    "url"  : "git address"
+    "type":"git",
+    "url" : "https://github.com/weiboad/weibo-ads-php-sdk.git"
   ]
 }
 ```  
