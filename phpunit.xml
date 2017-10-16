@@ -1,0 +1,19 @@
+<phpunit bootstrap="tests/bootstrap.php">
+  <testsuites>
+    <testsuite name="Weibo AdApi">
+      <directory>tests/</directory>
+      <exclude>tests/IntegrationTest.php</exclude>
+    </testsuite>
+  </testsuites>
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">src/</directory>
+      <exclude>
+        <directory suffix=".php">src/WeiboAd/Core/Constant</directory>
+      </exclude>
+      <exclude>
+        <directory suffix=".php">src/WeiboAd/Core/Entity</directory>
+      </exclude>
+    </whitelist>
+  </filter>
+</phpunit>

@@ -1,0 +1,23 @@
+{
+  "name": "weibo/ads-sdk-php",
+  "description": "php SDK for Weibo AD",
+  "type": "library",
+  "keywords": [
+    "weibo",
+    "ad sdk"
+  ],
+  "homepage": "https://developers.biz.weibo.com",
+  "require": {
+    "php": ">=5.5",
+    "guzzlehttp/guzzle" : "6.2.3",
+    "psr/log" : "~1.0.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "WeiboAd\\": "src/WeiboAd/"
+    }
+  },
+  "require-dev": {
+    "phpunit/PHPUnit": "~4.0"
+  }
+}
