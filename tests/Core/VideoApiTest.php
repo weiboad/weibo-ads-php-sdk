@@ -9,7 +9,8 @@ use WeiboAdTest\AbstractTestCase;
 class VideoApiTest extends AbstractTestCase
 {
 
-    public function testRead() {
+    public function testRead()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/video?id=1&is_md5=', 'GET')->willReturn(['id' => 1, 'fid' => '4050443606690251']);
@@ -19,7 +20,8 @@ class VideoApiTest extends AbstractTestCase
         $this->assertEquals('4050443606690251', $r->getFid());
     }
 
-    public function testList() {
+    public function testList()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/video/list?page=1&page_size=10', 'GET')->willReturn(['list' =>['id' => 1]]);
@@ -30,7 +32,8 @@ class VideoApiTest extends AbstractTestCase
     }
 
 
-    public function testUpload() {
+    public function testUpload()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/video', 'POST')->willReturn(['id' => 1, 'name' => 'video_test.mp4']);

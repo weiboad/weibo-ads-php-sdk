@@ -21,7 +21,8 @@ class ImageApi extends AbstractApi
      * @param $picId
      * @return Image
      */
-    public function read($picId) {
+    public function read($picId)
+    {
         $scheme = self::URI_READING . "?pic_id=" . $picId;
         $data = $this->api->getApiRequest()->call($scheme, 'GET');
         return new Image($data);
@@ -32,7 +33,8 @@ class ImageApi extends AbstractApi
      * @param int $pageSize
      * @return mixed
      */
-    public function lists($page = 1, $pageSize = 10) {
+    public function lists($page = 1, $pageSize = 10)
+    {
         $scheme = self::URI_LIST . "?page=$page&page_size=$pageSize";
         $data = $this->api->getApiRequest()->call($scheme, 'GET');
         if(isset($data['list'])) {
@@ -52,7 +54,8 @@ class ImageApi extends AbstractApi
      * @param $fileStream
      * @return Image
      */
-    public function upload($name, $fileStream) {
+    public function upload($name, $fileStream)
+    {
         $multiData = [
             ['name' => 'image_name', 'contents' => $name],
             ['name' => 'image', 'contents' => $fileStream],

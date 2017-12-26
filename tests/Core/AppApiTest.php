@@ -8,7 +8,8 @@ use WeiboAdTest\AbstractTestCase;
 class AppApiTest extends AbstractTestCase
 {
 
-    public function testList() {
+    public function testList()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/app/list?page=1&page_size=10', 'GET')->willReturn(['total' => 1]);
@@ -18,7 +19,8 @@ class AppApiTest extends AbstractTestCase
         $this->assertEquals(1, $r['total']);
     }
 
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/app', 'POST')->willReturn(['errcode' => 0]);
@@ -29,7 +31,8 @@ class AppApiTest extends AbstractTestCase
     }
 
 
-    public function testCategory() {
+    public function testCategory()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/app/category', 'GET')->willReturn([]);

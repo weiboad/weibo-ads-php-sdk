@@ -6,7 +6,7 @@ use WeiboAd\Collection;
 use WeiboAd\Core\Entity\Campaign;
 
 /**
- * Class AccountApi
+ * Class CampaignApi
  * @package WeiboAd\Core
  */
 class CampaignApi extends AbstractApi
@@ -22,7 +22,8 @@ class CampaignApi extends AbstractApi
      * @param $campaignId
      * @return Campaign
      */
-    public function read($campaignId) {
+    public function read($campaignId)
+    {
         $scheme = sprintf(self::URI_READING, $campaignId);
         $data = $this->api->getApiRequest()->call($scheme, 'GET');
         return new Campaign($data);
@@ -37,7 +38,8 @@ class CampaignApi extends AbstractApi
      * @param int $pageSize
      * @return mixed
      */
-    public function lists($name = '', $objective = 0, $budget = 0, $isReserved = false, $page = 1, $pageSize = 10) {
+    public function lists($name = '', $objective = 0, $budget = 0, $isReserved = false, $page = 1, $pageSize = 10)
+    {
         $scheme = self::URI_LIST . "?page=$page&page_size=$pageSize";
         if ($name) {
             $scheme .= "&name=$name";
@@ -68,7 +70,8 @@ class CampaignApi extends AbstractApi
      * @param Campaign $campaign
      * @return Campaign
      */
-    public function create(Campaign $campaign) {
+    public function create(Campaign $campaign)
+    {
         if ($campaign->getId()) {
             return $this->update($campaign);
         }
@@ -84,7 +87,8 @@ class CampaignApi extends AbstractApi
      *
      * @return Campaign
      */
-    public function updateStatus($campaignId, $status) {
+    public function updateStatus($campaignId, $status)
+    {
         $scheme = sprintf(self::URI_UPDATE, $campaignId);
         $putData = ['update_status' => true, 'configured_status' => $status];
         $data = $this->api->getApiRequest()->call($scheme, 'PUT', $putData);
@@ -95,7 +99,8 @@ class CampaignApi extends AbstractApi
      * @param Campaign $campaign
      * @return Campaign
      */
-    public function update(Campaign $campaign) {
+    public function update(Campaign $campaign)
+    {
         $scheme = sprintf(self::URI_UPDATE, $campaign->getId());
         $putData = $this->entityToArray($campaign);
         $data = $this->api->getApiRequest()->call($scheme, 'PUT', $putData);
@@ -106,7 +111,8 @@ class CampaignApi extends AbstractApi
      * @param $campaignId
      * @return Campaign
      */
-    public function delete($campaignId) {
+    public function delete($campaignId)
+    {
         $scheme = sprintf(self::URI_DELETE, $campaignId);
         return  $this->api->getApiRequest()->call($scheme, 'DELETE');
     }

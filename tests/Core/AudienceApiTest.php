@@ -9,7 +9,8 @@ use WeiboAdTest\AbstractTestCase;
 class AudienceApiTest extends AbstractTestCase
 {
 
-    public function testRead() {
+    public function testRead()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/audiences/info/1', 'GET')->willReturn(['id' => 1]);
@@ -19,7 +20,8 @@ class AudienceApiTest extends AbstractTestCase
         $this->assertEquals(1, $r->getId());
     }
 
-    public function testList() {
+    public function testList()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/audiences/list?page=1&page_size=10&name=audience_title', 'GET')->willReturn(['list' =>['id' => 1]]);
@@ -30,7 +32,8 @@ class AudienceApiTest extends AbstractTestCase
     }
 
 
-    public function testCreate() {
+    public function testCreate()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/audiences', 'POST')->willReturn(['id' => 1, 'name' => 'audience_title']);
@@ -41,7 +44,8 @@ class AudienceApiTest extends AbstractTestCase
     }
 
 
-    public function testDelete() {
+    public function testDelete()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/audiences?id=1', 'DELETE')->willReturn(['success' => 1]);
@@ -51,7 +55,8 @@ class AudienceApiTest extends AbstractTestCase
         $this->assertEquals(1, $r['success']);
     }
 
-    public function testUpload() {
+    public function testUpload()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/audiences/upload', 'POST')->willReturn(['file_id' => '34e4801457c82f1378fd165862cd7002-0-3-1-txt']);
@@ -61,7 +66,8 @@ class AudienceApiTest extends AbstractTestCase
         $this->assertEquals('34e4801457c82f1378fd165862cd7002-0-3-1-txt', $r['file_id']);
     }
 
-    public function testSetCoverage() {
+    public function testSetCoverage()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/audiences/set_coverage', 'POST')->willReturn(['id' => 2, 'look_alike_id' => 1]);

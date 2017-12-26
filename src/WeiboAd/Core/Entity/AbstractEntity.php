@@ -15,7 +15,8 @@ class AbstractEntity
      * AbstractEntity constructor.
      * @param $data
      */
-    public function __construct($data = "") {
+    public function __construct($data = "")
+    {
         if (is_array($data)) {
             $this->fillValues($data);
         }
@@ -24,7 +25,8 @@ class AbstractEntity
     /**
      * @param $data
      */
-    protected function fillValues($data) {
+    protected function fillValues($data)
+    {
         if (!is_array($data)) {
             return;
         }

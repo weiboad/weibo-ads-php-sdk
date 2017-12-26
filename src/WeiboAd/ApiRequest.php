@@ -34,21 +34,24 @@ class ApiRequest
      * ApiRequest constructor.
      * @param Api $api
      */
-    public function __construct(Api $api) {
+    public function __construct(Api $api)
+    {
         $this->api = $api;
     }
 
     /**
      * @param $timeout
      */
-    public function setTimeout($timeout) {
+    public function setTimeout($timeout)
+    {
         $this->timeout = $timeout;
     }
 
     /**
      * @return Client
      */
-    public function getHttpClient() {
+    public function getHttpClient()
+    {
         if (!$this->httpClient) {
             $config = [
                 'base_uri' => self::API_BASE_URL,
@@ -64,7 +67,8 @@ class ApiRequest
     /**
      * @param $client
      */
-    public function setHttpClient($client) {
+    public function setHttpClient($client)
+    {
         $this->httpClient = $client;
     }
 
@@ -77,7 +81,8 @@ class ApiRequest
      * @return mixed
      * @throws ApiException
      */
-    public function call($scheme, $method, $formData = [], $multiData = [], $body = null) {
+    public function call($scheme, $method, $formData = [], $multiData = [], $body = null)
+    {
 
         $options =  [
             "http_errors" => false,

@@ -28,7 +28,8 @@ class AudienceApi extends AbstractApi
      * @param string $mids
      * @return Audience
      */
-    public function create($name, $dataSource, $fileId, $dataFormat, $packageId = '', $mids = '') {
+    public function create($name, $dataSource, $fileId, $dataFormat, $packageId = '', $mids = '')
+    {
         $postData = [
             'name'          => $name,
             'data_source'   => $dataSource,
@@ -47,7 +48,8 @@ class AudienceApi extends AbstractApi
      * @param $isMd5
      * @return mixed
      */
-    public function upload($dataFormat, $fileStream, $isMd5) {
+    public function upload($dataFormat, $fileStream, $isMd5)
+    {
         $multiData = [
             ['name' => 'data_format', 'contents' => $dataFormat],
             ['name' => 'is_md5', 'contents' => $isMd5],
@@ -60,7 +62,8 @@ class AudienceApi extends AbstractApi
      * @param $audienceId
      * @return Audience
      */
-    public function read($audienceId) {
+    public function read($audienceId)
+    {
         $scheme = sprintf(self::URI_READING, $audienceId);
         $data = $this->api->getApiRequest()->call($scheme, 'GET');
         return new Audience($data);
@@ -74,7 +77,8 @@ class AudienceApi extends AbstractApi
      * @param int $pageSize
      * @return mixed
      */
-    public function lists($name = '', $status = '', $dataSource = '', $page = 1, $pageSize = 10) {
+    public function lists($name = '', $status = '', $dataSource = '', $page = 1, $pageSize = 10)
+    {
         $scheme = self::URI_LIST . "?page=$page&page_size=$pageSize";
         if ($name) {
             $scheme .= "&name=$name";
@@ -101,7 +105,8 @@ class AudienceApi extends AbstractApi
      * @param $audienceId
      * @return mixed
      */
-    public function delete($audienceId) {
+    public function delete($audienceId)
+    {
         $scheme = self::URI_DELETE . "?id=" . $audienceId;
         return $this->api->getApiRequest()->call($scheme, 'DELETE');
     }
@@ -113,7 +118,8 @@ class AudienceApi extends AbstractApi
      * @param $audiencesSize
      * @return Audience
      */
-    public function setCoverage($id, $lookAlikeId, $name, $audiencesSize) {
+    public function setCoverage($id, $lookAlikeId, $name, $audiencesSize)
+    {
         $postData = [
             'id'          => $id,
             'look_alike_id'   => $lookAlikeId,

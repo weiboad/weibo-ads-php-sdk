@@ -7,7 +7,8 @@ use WeiboAd\Collection;
 
 class CollectionTest extends AbstractTestCase
 {
-    public function testCollection() {
+    public function testCollection()
+    {
         $data = [
             'index1' => ['k1'=> 'v1'],
             'index2' => ['k2' => 'v2']

@@ -9,7 +9,8 @@ use WeiboAdTest\AbstractTestCase;
 class ImageApiTest extends AbstractTestCase
 {
 
-    public function testRead() {
+    public function testRead()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/image?pic_id=e06601f1jw1faie2emzv6j21dg0rads7', 'GET')->willReturn(['id' => 1, 'pic_id' => 'e06601f1jw1faie2emzv6j21dg0rads7']);
@@ -19,7 +20,8 @@ class ImageApiTest extends AbstractTestCase
         $this->assertEquals('e06601f1jw1faie2emzv6j21dg0rads7', $r->getPicId());
     }
 
-    public function testList() {
+    public function testList()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/image/list?page=1&page_size=10', 'GET')->willReturn(['list' =>['id' => 1]]);
@@ -30,7 +32,8 @@ class ImageApiTest extends AbstractTestCase
     }
 
 
-    public function testUpload() {
+    public function testUpload()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/image', 'POST')->willReturn(['id' => 1, 'pic_id' => 'e06601f1jw1faie2emzv6j21dg0rads7']);

@@ -17,7 +17,8 @@ class AccountApi extends AbstractApi
     /**
      * @return Account
      */
-    public function read() {
+    public function read()
+    {
        $data =  $this->api->getApiRequest()->call(self::URI_READING, 'GET');
        return new Account($data);
     }

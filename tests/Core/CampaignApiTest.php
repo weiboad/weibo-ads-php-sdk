@@ -10,7 +10,8 @@ use WeiboAdTest\AbstractTestCase;
 class CampaignApiTest extends AbstractTestCase
 {
 
-    public function testRead() {
+    public function testRead()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/campaigns/info/1', 'GET')->willReturn(['id' => 1]);
@@ -20,7 +21,8 @@ class CampaignApiTest extends AbstractTestCase
         $this->assertEquals(1, $r->getId());
     }
 
-    public function testList() {
+    public function testList()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/campaigns/search?page=1&page_size=10&name=campaign_title', 'GET')->willReturn(['list' =>['id' => 1]]);
@@ -31,7 +33,8 @@ class CampaignApiTest extends AbstractTestCase
     }
 
 
-    public function testCreate() {
+    public function testCreate()
+    {
         $ad = new Campaign(['name' => 'campaign_title']);
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
@@ -42,7 +45,8 @@ class CampaignApiTest extends AbstractTestCase
         $this->assertEquals('campaign_title', $r->getName());
     }
 
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $ad = new Campaign(['name' => 'campaign_title2', 'id' => 1]);
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
@@ -56,7 +60,8 @@ class CampaignApiTest extends AbstractTestCase
         $this->assertEquals('campaign_title2', $r->getName());
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/campaigns/1', 'DELETE')->willReturn(['success' => 1]);
@@ -66,7 +71,8 @@ class CampaignApiTest extends AbstractTestCase
         $this->assertEquals(1, $r['success']);
     }
 
-    public function testUpdateStatus() {
+    public function testUpdateStatus()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/campaigns/1', 'PUT')->willReturn(['id' => 1, 'name' => 'campaign_title', 'configure_status' => 0, 'effective_status' => 0]);

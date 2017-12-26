@@ -22,7 +22,8 @@ class Util
      * @param int $options
      * @return mixed
      */
-    public static function jsonDecode($json, $assoc = false, $depth = 512, $options = 0){
+    public static function jsonDecode($json, $assoc = false, $depth = 512, $options = 0)
+    {
         $data = json_decode($json, $assoc, $depth, $options);
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new InvalidArgumentException(
@@ -38,7 +39,8 @@ class Util
      * @param  string  $delimiter
      * @return string
      */
-    public static function snake($value, $delimiter = '_') {
+    public static function snake($value, $delimiter = '_')
+    {
         $key = $value.$delimiter;
 
         if (isset(static::$snakeCache[$key])) {
@@ -56,7 +58,8 @@ class Util
      * @param $value
      * @return mixed
      */
-    public static function studly($value) {
+    public static function studly($value)
+    {
         $key = $value;
 
         if (isset(static::$studlyCache[$key])) {

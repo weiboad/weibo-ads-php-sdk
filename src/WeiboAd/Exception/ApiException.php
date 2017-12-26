@@ -16,7 +16,8 @@ class ApiException extends Exception
      * @param string $data
      * @param int $errorCode
      */
-    public function __construct($data, $errorCode = 400) {
+    public function __construct($data, $errorCode = 400)
+    {
 
         if (is_array($data) && isset($data['error'])) {
             $message = $data['error']['message'];

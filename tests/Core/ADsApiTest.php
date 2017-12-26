@@ -10,7 +10,8 @@ use WeiboAdTest\AbstractTestCase;
 class ADsApiTest extends AbstractTestCase
 {
 
-    public function testRead() {
+    public function testRead()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/ads/info/1', 'GET')->willReturn(['id' => 1]);
@@ -20,7 +21,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals(1, $r->getId());
     }
 
-    public function testList() {
+    public function testList()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/ads/search?page=1&page_size=10&name=ad_title', 'GET')->willReturn(['list' =>['id' => 1]]);
@@ -31,7 +33,8 @@ class ADsApiTest extends AbstractTestCase
     }
 
 
-    public function testCreate() {
+    public function testCreate()
+    {
         $ad = new ADs(['name' => 'ad_title']);
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
@@ -42,7 +45,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals('ad_title', $r->getName());
     }
 
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $ad = new ADs(['name' => 'ad_title2', 'id' => 1]);
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
@@ -56,7 +60,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals('ad_title2', $r->getName());
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/ads/1', 'DELETE')->willReturn(['success' => 1]);
@@ -66,7 +71,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals(1, $r['success']);
     }
 
-    public function testUpdateStatus() {
+    public function testUpdateStatus()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/ads/updatestatus', 'POST')->willReturn(['list' => ['id' => 1, 'name' => 'ad_title', 'configured_status' => 0, 'effective_status' => 0]]);
@@ -77,7 +83,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals(0, $ad->getConfiguredStatus());
     }
 
-    public function testTargetMap() {
+    public function testTargetMap()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/ads/targetmap', 'GET')->willReturn(['interests_normal' => [['name' => '金融', 'value' => [['name' => 'name', 'value' => 100202]]]]]);
@@ -87,7 +94,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals(100202, $r['interests_normal'][0]['value'][0]['value']);
     }
 
-    public function testGuarantee() {
+    public function testGuarantee()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $url = '/ads/guarantee?targeting=' . json_encode(['age_min' => 8, 'age_max' => 10, 'genders' => 401]);
@@ -98,7 +106,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertCount(3, $r['list']['2017-05-11']);
     }
 
-    public function testGetGuaranteePrice(){
+    public function testGetGuaranteePrice()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $url = '/ads/guarantee/price?targeting=' . json_encode(['age_min' => 8, 'age_max' => 10, 'genders' => 401]);
@@ -110,7 +119,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals(6000, $r['list']['sum']);
     }
 
-    public function testGetGuaranteeReleasePrice() {
+    public function testGetGuaranteeReleasePrice()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $url = '/ads/guarantee/price-release?release_list=' . json_encode([1,2,3]) . '&id=1';
@@ -122,7 +132,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals(6000, $r['list']['sum_fine']);
     }
 
-    public function testGetTopic() {
+    public function testGetTopic()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $url = '/ads/topic';
@@ -133,7 +144,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals(123, $r['list'][0]['follow']);
     }
 
-    public function testGetDesignatedAccount() {
+    public function testGetDesignatedAccount()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $url = '/ads/designated-account';
@@ -144,7 +156,8 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals(2, $r['list'][0]['verified']);
     }
 
-    public function testGetMid() {
+    public function testGetMid()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $url = '/ads/mid?url=http://weibo.com/1656783065/F6AOUl7pA?from=page_1005051656783065_profile&wvr=6&mod=weibotime&type=comment#_rnd1500261404282';

@@ -10,7 +10,8 @@ use WeiboAdTest\AbstractTestCase;
 class CreativeApiTest extends AbstractTestCase
 {
 
-    public function testRead() {
+    public function testRead()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/creatives/info/1', 'GET')->willReturn(['id' => 1]);
@@ -20,7 +21,8 @@ class CreativeApiTest extends AbstractTestCase
         $this->assertEquals(1, $r->getId());
     }
 
-    public function testList() {
+    public function testList()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/creatives/search?page=1&page_size=10&name=creative_title', 'GET')->willReturn(['list' =>['id' => 1]]);
@@ -31,7 +33,8 @@ class CreativeApiTest extends AbstractTestCase
     }
 
 
-    public function testCreate() {
+    public function testCreate()
+    {
         $creative = new Creative(['name' => 'creative_title']);
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
@@ -46,7 +49,8 @@ class CreativeApiTest extends AbstractTestCase
         $this->assertEquals(1, $r->getId());
     }
 
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/creatives/1', 'PUT')->willReturn(['id' => 1, 'name' => 'creative_title']);
@@ -57,7 +61,8 @@ class CreativeApiTest extends AbstractTestCase
 
     }
 
-    public function testCreateWithMid() {
+    public function testCreateWithMid()
+    {
         $creative = new Creative(['name' => 'creative_title']);
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
@@ -72,7 +77,8 @@ class CreativeApiTest extends AbstractTestCase
         $this->assertEquals(1, $r->getId());
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/creatives/1', 'DELETE')->willReturn(['success' => 1]);
@@ -82,7 +88,8 @@ class CreativeApiTest extends AbstractTestCase
         $this->assertEquals(1, $r['success']);
     }
 
-    public function testUpdateStatus() {
+    public function testUpdateStatus()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/creatives/1', 'PUT')->willReturn(['id' => 1, 'name' => 'creative_title2', 'configured_status' => 0, 'effective_status' => 0]);
@@ -92,7 +99,8 @@ class CreativeApiTest extends AbstractTestCase
         $this->assertEquals(0, $r['configured_status']);
     }
 
-    public function testCreateTag() {
+    public function testCreateTag()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/tags', 'POST')->willReturn(['tags' => ['6648544ajw1fbthp8r3d5j21kw11x1kx' => ['long_url' => 'http%3A%2F%2Fshorturl.biz.weibo.cn%2FRfsetev']]]);

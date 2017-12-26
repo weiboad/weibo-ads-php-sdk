@@ -25,7 +25,8 @@ class InsightApi extends AbstractApi
      * @param $rows
      * @return mixed
      */
-    public function demography(array $timeInterval, array $field, array $dimension, array $granularity,  $param, array $orderBy, $orderMode, $page, $rows) {
+    public function demography(array $timeInterval, array $field, array $dimension, array $granularity,  $param, array $orderBy, $orderMode, $page, $rows)
+    {
         $params = [
             'time_interval' => $timeInterval,
             'order_by' => $orderBy,
@@ -55,7 +56,8 @@ class InsightApi extends AbstractApi
      * @param $rows
      * @return mixed
      */
-    public function effect(array $timeInterval, array $field, array $dimension, array $granularity, $param, array $orderBy, $orderMode, $page, $rows) {
+    public function effect(array $timeInterval, array $field, array $dimension, array $granularity, $param, array $orderBy, $orderMode, $page, $rows)
+    {
         $params = [
             'time_interval' => $timeInterval,
             'order_by' => $orderBy,
@@ -84,7 +86,8 @@ class InsightApi extends AbstractApi
      * @param $rows
      * @return mixed
      */
-    public function layer(array $timeInterval, array $field, array $dimension, array $granularity, $param, array $orderBy, $orderMode, $page, $rows) {
+    public function layer(array $timeInterval, array $field, array $dimension, array $granularity, $param, array $orderBy, $orderMode, $page, $rows)
+    {
         $params = [
             'time_interval' => $timeInterval,
             'order_by' => $orderBy,
@@ -115,7 +118,8 @@ class InsightApi extends AbstractApi
      * @param $rows
      * @return mixed
      */
-    public function graph(array $timeInterval, array $field, array $dimension, array $granularity, $param, array $orderBy, $orderMode, $page, $rows) {
+    public function graph(array $timeInterval, array $field, array $dimension, array $granularity, $param, array $orderBy, $orderMode, $page, $rows)
+    {
         $params = [
             'time_interval' => $timeInterval,
             'order_by' => $orderBy,

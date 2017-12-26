@@ -8,7 +8,8 @@ use WeiboAdTest\AbstractTestCase;
 class AccountApiTest extends AbstractTestCase
 {
 
-    public function testAccount() {
+    public function testAccount()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/account', 'GET')->willReturn(['id' => 1]);

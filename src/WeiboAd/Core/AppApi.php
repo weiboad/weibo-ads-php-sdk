@@ -7,7 +7,7 @@ use WeiboAd\Core\Entity\App;
 
 
 /**
- * Class AccountApi
+ * Class AppApi
  * @package WeiboAd\Core
  */
 class AppApi extends AbstractApi
@@ -25,7 +25,8 @@ class AppApi extends AbstractApi
      * @param int $pageSize
      * @return mixed
      */
-    public function lists($name = '', $status = 0, $page = 1, $pageSize = 10) {
+    public function lists($name = '', $status = 0, $page = 1, $pageSize = 10)
+    {
         $scheme = self::URI_LIST . "?page=$page&page_size=$pageSize";
         if ($name) {
             $scheme .= "&name=$name";
@@ -51,7 +52,8 @@ class AppApi extends AbstractApi
     /**
      * @return mixed
      */
-    public function category() {
+    public function category()
+    {
         return $this->api->getApiRequest()->call(self::URI_CATEGORY, 'GET');
     }
 
@@ -62,7 +64,8 @@ class AppApi extends AbstractApi
      * @param string $androidUrl
      * @return mixed
      */
-    public function upload($appType, $iosUrl = "", $androidUrl = "") {
+    public function upload($appType, $iosUrl = "", $androidUrl = "")
+    {
         $postData = ['app_type' => $appType, 'ios_url' => $iosUrl, 'android_url' => $androidUrl];
         return $this->api->getApiRequest()->call(self::URI_UPLOAD, 'POST', $postData);
     }
@@ -79,7 +82,8 @@ class AppApi extends AbstractApi
      * @param $updateInfo
      * @return mixed
      */
-    public function add($name, $cate, $subCate, $developer, $packageName, $icon, $image, $description, $updateInfo) {
+    public function add($name, $cate, $subCate, $developer, $packageName, $icon, $image, $description, $updateInfo)
+    {
         $postData = [
             'name' => $name,
             'cate' => $cate,

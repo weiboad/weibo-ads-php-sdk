@@ -3,7 +3,7 @@
 namespace WeiboAd\Core\Entity;
 
 /**
- * Class Image
+ * Class Video
  * @package WeiboAd\Core\Entity
  */
 class Video extends AbstractEntity

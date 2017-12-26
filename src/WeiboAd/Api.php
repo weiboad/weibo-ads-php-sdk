@@ -42,7 +42,8 @@ class Api
 
     protected $config;
 
-    public function __construct($appId, $appSecret, $token) {
+    public function __construct($appId, $appSecret, $token)
+    {
         $this->token     = $token;
         $this->appId     =  $appId;
         $this->appSecret = $appSecret;
@@ -52,14 +53,16 @@ class Api
     /**
      * @param LoggerInterface $logger
      */
-    public function setLogger(LoggerInterface $logger) {
+    public function setLogger(LoggerInterface $logger)
+    {
         $this->logger = $logger;
     }
 
     /**
      * @return LoggerInterface $logger
      */
-    public function getLogger() {
+    public function getLogger()
+    {
         if (!$this->logger) {
             $this->logger = new NullLogger();
         }
@@ -69,35 +72,40 @@ class Api
     /**
      * @return string
      */
-    public function getToken() {
+    public function getToken()
+    {
         return $this->token;
     }
 
     /**
      * @return string
      */
-    public function getAppId() {
+    public function getAppId()
+    {
         return $this->appId;
     }
 
     /**
      * @return string
      */
-    public function getAppSecret() {
+    public function getAppSecret()
+    {
         return $this->appSecret;
     }
 
     /**
      * @return string
      */
-    public function getVersion() {
+    public function getVersion()
+    {
         return self::API_VERSION;
     }
 
     /**
      * @return ApiRequest
      */
-    public function getApiRequest() {
+    public function getApiRequest()
+    {
         return $this->apiRequest;
     }
 }

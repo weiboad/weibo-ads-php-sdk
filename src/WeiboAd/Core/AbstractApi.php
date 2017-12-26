@@ -15,7 +15,8 @@ class AbstractApi
 {
     protected $api;
 
-    public function __construct(Api $api) {
+    public function __construct(Api $api)
+    {
         $this->api = $api;
     }
 
@@ -23,7 +24,8 @@ class AbstractApi
      * @param AbstractEntity $entity
      * @return array
      */
-    protected function entityToArray(AbstractEntity $entity) {
+    protected function entityToArray(AbstractEntity $entity)
+    {
         $ref = new \ReflectionClass($entity);
         $properties = $ref->getProperties();
         $data = [];

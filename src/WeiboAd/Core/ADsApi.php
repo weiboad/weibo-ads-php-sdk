@@ -7,7 +7,7 @@ use WeiboAd\Core\Entity\ADs;
 use WeiboAd\Exception\InvalidArgumentException;
 
 /**
- * Class AccountApi
+ * Class ADsApi
  * @package WeiboAd\Core
  */
 class ADsApi extends AbstractApi
@@ -31,7 +31,8 @@ class ADsApi extends AbstractApi
      * @param $id
      * @return ADs
      */
-    public function read($id) {
+    public function read($id)
+    {
         $scheme = sprintf(self::URI_READING, $id);
         $data =  $this->api->getApiRequest()->call($scheme, 'GET');
         return new ADs($data);
@@ -46,7 +47,8 @@ class ADsApi extends AbstractApi
      * @param int $pageSize
      * @return mixed
      */
-    public function lists($name = '', $campaignId = 0, $objective = 0, $isReserved = false, $page = 1, $pageSize = 10) {
+    public function lists($name = '', $campaignId = 0, $objective = 0, $isReserved = false, $page = 1, $pageSize = 10)
+    {
         $scheme = self::URI_LIST . "?page=$page&page_size=$pageSize";
         if ($name) {
             $scheme .= "&name=$name";
@@ -76,7 +78,8 @@ class ADsApi extends AbstractApi
      * @param ADs $ads
      * @return ADs
      */
-    public function create(ADs $ads) {
+    public function create(ADs $ads)
+    {
         if ($ads->getId()) {
 
             return $this->update($ads);
@@ -95,7 +98,8 @@ class ADsApi extends AbstractApi
      * @param ADs $ads
      * @return ADs
      */
-    public function update(ADs $ads) {
+    public function update(ADs $ads)
+    {
         $scheme = sprintf(self::URI_UPDATE, $ads->getId());
         $putData = $this->entityToArray($ads);
         foreach ($putData as $k => $v) {
@@ -118,7 +122,8 @@ class ADsApi extends AbstractApi
      *
      * @return ADs
      */
-    public function updateStatus($adId, $status) {
+    public function updateStatus($adId, $status)
+    {
         $scheme = self::URI_UPDATE_STATUS;
         $putData = ['configured_status' => $status, 'id' => $adId];
         $data = $this->api->getApiRequest()->call($scheme, 'POST',$putData);
@@ -136,7 +141,8 @@ class ADsApi extends AbstractApi
      * @param $adId
      * @return mixed
      */
-    public function delete($adId) {
+    public function delete($adId)
+    {
         $scheme = sprintf(self::URI_DELETE, $adId);
         return  $this->api->getApiRequest()->call($scheme, 'DELETE');
     }
@@ -145,7 +151,8 @@ class ADsApi extends AbstractApi
      * @param array $target
      * @return mixed
      */
-    public function targetMap(array $target = []) {
+    public function targetMap(array $target = [])
+    {
         if (!empty($target)) {
             $scheme = self::URI_TARGET_MAP . "?target=" . json_encode($target);
         } else {
@@ -163,7 +170,8 @@ class ADsApi extends AbstractApi
      * @param array $os
      * @return mixed
      */
-    public function guarantee($ageMin, $ageMax, $gender, array $locations = [], $interests = [], $os = []) {
+    public function guarantee($ageMin, $ageMax, $gender, array $locations = [], $interests = [], $os = [])
+    {
         $params = ['age_min' => $ageMin, 'age_max' => $ageMax, 'genders' => $gender];
         if ($locations) {
             $params['geo_locations'] = $locations;
@@ -187,7 +195,8 @@ class ADsApi extends AbstractApi
      * @param array $os
      * @return mixed
      */
-    public function getGuaranteePrice($ageMin, $ageMax, $gender, array $locations = [], $interests = [], $os = []) {
+    public function getGuaranteePrice($ageMin, $ageMax, $gender, array $locations = [], $interests = [], $os = [])
+    {
         $params = ['age_min' => $ageMin, 'age_max' => $ageMax, 'genders' => $gender];
         if ($locations) {
             $params['geo_locations'] = $locations;
@@ -216,7 +225,8 @@ class ADsApi extends AbstractApi
      * @param string $keyword
      * @return mixed
      */
-    public function getTopic($keyword = "") {
+    public function getTopic($keyword = "")
+    {
         $scheme = self::URI_TOPIC;
         if ($keyword) {
             $scheme .= "?keyword=" . $keyword;
@@ -228,7 +238,8 @@ class ADsApi extends AbstractApi
      * @param $url
      * @return mixed
      */
-    public function getMid($url) {
+    public function getMid($url)
+    {
         if (!$url) {
             throw new InvalidArgumentException();
         }
@@ -242,7 +253,8 @@ class ADsApi extends AbstractApi
      * @return mixed
      *
      */
-    public function getDesignatedAccount($keyword = "") {
+    public function getDesignatedAccount($keyword = "")
+    {
         $scheme = self::URI_DESIGNATED_ACCOUNT;
         if ($keyword) {
             $scheme .= "?keyword=" . $keyword;

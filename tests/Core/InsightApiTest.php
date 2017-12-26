@@ -8,7 +8,8 @@ use WeiboAdTest\AbstractTestCase;
 class InsightApiTest extends AbstractTestCase
 {
 
-    public function testDemography() {
+    public function testDemography()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/insights/demography?data={"time_interval":["2017-07-01","2017-07-11"],"order_by":["pv"],"granularity":["age"],"dimension":["account"],"page":1,"rows":10,"field":["pv","ecpm"],"param":{"account_id":"123"},"order_mode":"desc"}', 'GET')->willReturn(['rows' => 10]);
@@ -19,7 +20,8 @@ class InsightApiTest extends AbstractTestCase
     }
 
 
-    public function testEffect() {
+    public function testEffect()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/insights/effect?data={"time_interval":["2017-07-01","2017-07-11"],"order_by":["pv"],"granularity":["account","date"],"dimension":["account"],"page":1,"rows":10,"field":["pv","ecpm"],"param":{"account_id":"123"},"order_mode":"desc"}', 'GET')->willReturn(['rows' => 10]);
@@ -29,7 +31,8 @@ class InsightApiTest extends AbstractTestCase
         $this->assertEquals(10, $data['rows']);
     }
 
-    public function testLayer() {
+    public function testLayer()
+    {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
         $apiRequest->method('call')->with('/insights/layer?data={"time_interval":["2017-07-01","2017-07-11"],"order_by":["second_pv"],"granularity":["account","date"],"dimension":["account"],"page":1,"rows":10,"field":["second_pv","second_layer_pv_rate"],"param":{"account_id":"123"},"order_mode":"desc"}', 'GET')->willReturn(['rows' => 10]);

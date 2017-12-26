@@ -23,7 +23,8 @@ class CreativeApi extends AbstractApi
      * @param $creativeId
      * @return Creative
      */
-    public function read($creativeId) {
+    public function read($creativeId)
+    {
         $scheme = sprintf(self::URI_READING, $creativeId);
         $data = $this->api->getApiRequest()->call($scheme, 'GET');
         return new Creative($data);
@@ -33,7 +34,8 @@ class CreativeApi extends AbstractApi
      * @param Creative $creative
      * @return Creative
      */
-    public function create(Creative $creative) {
+    public function create(Creative $creative)
+    {
         if ($creative->getId()) {
             return $creative;
         }
@@ -51,7 +53,8 @@ class CreativeApi extends AbstractApi
      * @param Creative $creative
      * @return Creative
      */
-    public function createWithMid(Creative $creative) {
+    public function createWithMid(Creative $creative)
+    {
         return $this->create($creative);
     }
 
@@ -62,7 +65,8 @@ class CreativeApi extends AbstractApi
      * @param $commentOpen
      * @return Creative
      */
-    public function update($creativeId, $monitorType, $monitor, $commentOpen) {
+    public function update($creativeId, $monitorType, $monitor, $commentOpen)
+    {
         $scheme = sprintf(self::URI_UPDATE, $creativeId);
         $putData = [
             'monitor_type' => $monitorType,
@@ -78,7 +82,8 @@ class CreativeApi extends AbstractApi
      * @param $status @see WeiboAd\Core\Constant\CreativeConfiguredStatus
      * @return mixed
      */
-    public function updateStatus($creativeId, $status) {
+    public function updateStatus($creativeId, $status)
+    {
         $scheme = sprintf(self::URI_UPDATE, $creativeId);
         $putData = ['update_status' => true, 'status' => $status];
         return $this->api->getApiRequest()->call($scheme, 'PUT',$putData);
@@ -92,7 +97,8 @@ class CreativeApi extends AbstractApi
      * @param int $pageSize
      * @return mixed
      */
-    public function lists($name = '', $adId = 0, $page = 1, $pageSize = 10) {
+    public function lists($name = '', $adId = 0, $page = 1, $pageSize = 10)
+    {
         $scheme = self::URI_LIST . "?page=$page&page_size=$pageSize";
         if ($name) {
             $scheme .= "&name=$name";
@@ -115,7 +121,8 @@ class CreativeApi extends AbstractApi
      * @param $creativeId
      * @return mixed
      */
-    public function delete($creativeId) {
+    public function delete($creativeId)
+    {
         $scheme = sprintf(self::URI_DELETE, $creativeId);
         return $this->api->getApiRequest()->call($scheme, 'DELETE');
     }
@@ -128,7 +135,8 @@ class CreativeApi extends AbstractApi
      * @param string $appId
      * @return mixed
      */
-    public function createTag(array $photoUrl, array $photoTags, $tagDesc, $deepLink, $appId = '') {
+    public function createTag(array $photoUrl, array $photoTags, $tagDesc, $deepLink, $appId = '')
+    {
         $postData = [
             'photo_url'  => json_encode($photoUrl),
             'photo_tags' => json_encode($photoTags),

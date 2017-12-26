@@ -23,18 +23,21 @@ class IntegrationTest extends AbstractTestCase
 {
     private $api;
 
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         $this->api = new Api('app_id_test', 'app_secret_test', '1a581e6debf774d7aeec48939b82d737fb7c10106dd45074ae9402bc2b72a37d5c224ca137a042a632fd56d9a1e09cec399aa641ae2cb327ccc25111c534c76d');
     }
 
-    public function testAccount() {
+    public function testAccount()
+    {
         $obj = new AccountApi($this->api);
         $account = $obj->read();
         $this->assertEquals('1656783065', $account->getCustomerId());
     }
 
-    public function testCampaign() {
+    public function testCampaign()
+    {
         $obj = new CampaignApi($this->api);
         $campaigns = $obj->lists();
         if (isset($campaigns['list']) && !empty($campaigns['list'])) {
@@ -53,7 +56,8 @@ class IntegrationTest extends AbstractTestCase
         }
     }
 
-    public function testAds() {
+    public function testAds()
+    {
         $obj = new ADsApi($this->api);
         $ads = $obj->lists();
 
@@ -75,7 +79,8 @@ class IntegrationTest extends AbstractTestCase
 
     }
 
-    public function testCreative() {
+    public function testCreative()
+    {
         $obj = new CreativeApi($this->api);
         $creatives = $obj->lists();
         if (isset($creatives['list']) && !empty($creatives['list'])) {
@@ -96,7 +101,8 @@ class IntegrationTest extends AbstractTestCase
         }
     }
 
-    public function testAudience() {
+    public function testAudience()
+    {
         $obj = new AudienceApi($this->api);
         $audiences = $obj->lists();
         if (isset($audiences['list']) && $audiences['list']->count()) {
@@ -107,7 +113,8 @@ class IntegrationTest extends AbstractTestCase
 
     }
 
-    public function testImage() {
+    public function testImage()
+    {
         $obj = new ImageApi($this->api);
         $images = $obj->lists();
         if (isset($images['list']) && $images['list']->count()) {
@@ -118,7 +125,8 @@ class IntegrationTest extends AbstractTestCase
     }
 
 
-    public function testVideo() {
+    public function testVideo()
+    {
         $obj = new VideoApi($this->api);
         $videos = $obj->lists();
         if (isset($videos['list']) && $videos['list']->count()) {
@@ -128,7 +136,8 @@ class IntegrationTest extends AbstractTestCase
         }
     }
 
-    public function testDemography() {
+    public function testDemography()
+    {
         $obj = new InsightApi($this->api);
         $data = $obj->demography(['2017-07-01', '2017-07-11'], ['pv', 'ecpm'], ['account'], ['age'], new \stdClass(), ['pv'], 'desc', 1, 10);
 
@@ -136,7 +145,8 @@ class IntegrationTest extends AbstractTestCase
             $this->assertEquals(10, $data['rows']);
         }
     }
-    public function testEffect() {
+    public function testEffect()
+    {
         $obj = new InsightApi($this->api);
         $data = $obj->effect(['2017-07-01', '2017-07-11'], ['pv', 'ecpm'], ['account'], ['account', 'date'], new \stdClass(), ['pv'], 'desc', 1, 10);
         if (isset($data['rows'])) {
@@ -144,7 +154,8 @@ class IntegrationTest extends AbstractTestCase
         }
     }
 
-    public function testLayer() {
+    public function testLayer()
+    {
         $obj = new InsightApi($this->api);
         $data = $obj->layer(['2017-07-01', '2017-07-11'], ['second_pv', 'second_layer_pv_rate'], ['account'], ['account', 'date'], ['account_id' => '123'], ['second_pv'], 'desc', 1, 10);
         if (isset($data['page'])) {
@@ -152,19 +163,22 @@ class IntegrationTest extends AbstractTestCase
         }
     }
 
-    public function testAppCategory() {
+    public function testAppCategory()
+    {
         $obj = new AppApi($this->api);
         $data = $obj->category();
         $this->assertTrue(is_array($data));
     }
 
-    public function testAppList() {
+    public function testAppList()
+    {
         $obj = new AppApi($this->api);
         $data = $obj->lists();
         $this->assertEquals(10, $data['page_size']);
     }
 
-    public function testAppUpload() {
+    public function testAppUpload()
+    {
         $this->api->getApiRequest()->setTimeout(30);
         $obj = new AppApi($this->api);
         $data = $obj->upload(1, "https://itunes.apple.com/cn/app/dong-qiu-di-zhuan-ye-quan/id766695512?ls=1&mt=8");

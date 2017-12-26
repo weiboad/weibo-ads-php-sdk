@@ -8,7 +8,7 @@ use WeiboAd\Core\Entity\Video;
 
 
 /**
- * Class ImageApi
+ * Class VideoApi
  * @package WeiboAd\Core
  */
 class VideoApi extends AbstractApi
@@ -25,7 +25,8 @@ class VideoApi extends AbstractApi
      * @param bool $isMD5
      * @return Video
      */
-    public function read($videoId, $isMD5 = false) {
+    public function read($videoId, $isMD5 = false)
+    {
         $scheme = self::URI_READING . "?id=" . $videoId . "&is_md5=" . $isMD5;
         $data = $this->api->getApiRequest()->call($scheme, 'GET');
         return new Video($data);
@@ -36,7 +37,8 @@ class VideoApi extends AbstractApi
      * @param int $pageSize
      * @return mixed
      */
-    public function lists($page = 1, $pageSize = 10) {
+    public function lists($page = 1, $pageSize = 10)
+    {
         $scheme = self::URI_LIST . "?page=$page&page_size=$pageSize";
         $data = $this->api->getApiRequest()->call($scheme, 'GET');
         if(isset($data['list'])) {
@@ -58,7 +60,8 @@ class VideoApi extends AbstractApi
      * @param $fileStream
      * @return Video
      */
-    public function upload($name, $fileMD5, $fileSize, $fileStream) {
+    public function upload($name, $fileMD5, $fileSize, $fileStream)
+    {
         $multiData = [
             ['name' => 'video_name', 'contents' => $name],
             ['name' => 'file_md5', 'contents' => $fileMD5],
@@ -76,7 +79,8 @@ class VideoApi extends AbstractApi
      * @param $fileSize
      * @return mixed
      */
-    public function init($name, $fileMD5, $fileSize) {
+    public function init($name, $fileMD5, $fileSize)
+    {
         $multiData = [
             ['name' => 'video_name', 'contents' => $name],
             ['name' => 'file_md5', 'contents' => $fileMD5],
@@ -97,7 +101,8 @@ class VideoApi extends AbstractApi
      * @param $file
      * @return mixed
      */
-    public function segment($fileToken, $fileMD5, $segmentSize, $length, $segmentMD5, $index, $file) {
+    public function segment($fileToken, $fileMD5, $segmentSize, $length, $segmentMD5, $index, $file)
+    {
         $multiData = [
             ['name' => 'file_token', 'contents' => $fileToken],
             ['name' => 'file_md5', 'contents' => $fileMD5],

@@ -1,6 +1,9 @@
 <?php
 
-class AccountStatus {
+namespace WeiboAd\Core\Constant;
+
+class AccountStatus
+{
 
     /**
      * 未开户/聚财系统删户
