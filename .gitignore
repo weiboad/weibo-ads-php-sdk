@@ -2,4 +2,5 @@
 /composer.lock
 /composer.local.*
 .DS_Store
+*.iml
 /.idea
