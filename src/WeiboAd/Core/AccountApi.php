@@ -13,6 +13,7 @@ class AccountApi extends AbstractApi
 {
 
     const URI_READING = "/account";
+    const URI_ASSET = "/account/asset";
 
     /**
      * @return Account
@@ -21,6 +22,14 @@ class AccountApi extends AbstractApi
     {
        $data =  $this->api->getApiRequest()->call(self::URI_READING, 'GET');
        return new Account($data);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function asset()
+    {
+        return  $this->api->getApiRequest()->call(self::URI_ASSET, 'GET');
     }
 
 
