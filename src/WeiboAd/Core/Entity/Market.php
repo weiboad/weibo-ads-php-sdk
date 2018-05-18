@@ -3,7 +3,7 @@
 namespace WeiboAd\Core\Entity;
 
 /**
- * Class Maket
+ * Class Market
  * @package WeiboAd\Core\Entity
  */
 class Market extends AbstractEntity
@@ -66,55 +66,20 @@ class Market extends AbstractEntity
 
 
     /**
-     * @var int
+     * @var Effect
      */
-    private $effectNormal;
-
+    private $effect;
 
     /**
-     * @var int
+     * @var Provider
      */
-    private $effectVideo;
-
-
+    private $provider;
 
     /**
-     * @var string
+     * @var Usage
      */
-    private $providerName;
+    private $usage;
 
-
-    /**
-     * @var int
-     */
-    private $providerId;
-
-
-    /**
-     * @var string
-     */
-    private $providerIcon;
-
-
-    /**
-     * @var string
-     */
-    private $providerDesc;
-
-    /**
-     * @var int
-     */
-    private $usageAll;
-
-    /**
-     * @var int
-     */
-    private $usageCustomer;
-
-    /**
-     * @var int
-     */
-    private $usageOwner;
 
     /**
      * @var int
@@ -288,154 +253,65 @@ class Market extends AbstractEntity
 
 
     /**
-     * @return int
+     * @return Effect
      */
-    public function getEffectNormal()
+    public function getEffect()
     {
-        return $this->effectNormal;
+        return $this->effect;
     }
 
     /**
-     * @param int $effectNormal
+     * @param mixed $effect
      */
-    public function setEffectNormal($effectNormal)
+    public function setEffect($effect)
     {
-        $this->effectNormal = $effectNormal;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getEffectVideo()
-    {
-        return $this->effectVideo;
-    }
-
-    /**
-     * @param int $effectVideo
-     */
-    public function setEffectVideo($effectVideo)
-    {
-        $this->effectVideo = $effectVideo;
+        if ($effect instanceof Effect) {
+            $this->effect = $effect;
+        } elseif (is_array($effect)) {
+            $this->effect = new Effect($effect);
+        }
     }
 
 
     /**
-     * @return string
+     * @return Provider
      */
-    public function getProviderName()
+    public function getProvider()
     {
-        return $this->providerName;
+        return $this->provider;
     }
 
     /**
-     * @param string $providerName
+     * @param mixed $provider
      */
-    public function setProviderName($providerName)
+    public function setProvider($provider)
     {
-        $this->providerName = $providerName;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getProvideId()
-    {
-        return $this->providerId;
-    }
-
-    /**
-     * @param int  $providerId
-     */
-    public function setProvideId($providerId)
-    {
-        $this->providerId = $providerId;
+        if ($provider instanceof Provider) {
+            $this->provider = $provider;
+        } elseif (is_array($provider)) {
+            $this->provider = new Provider($provider);
+        }
     }
 
 
     /**
-     * @return string
+     * @return Usage
      */
-    public function getProviderIcon()
+    public function getUsage()
     {
-        return $this->providerIcon;
+        return $this->usage;
     }
 
     /**
-     * @param string $providerIcon
+     * @param mixed $usage
      */
-    public function setProviderIcon($providerIcon)
+    public function setUsage($usage)
     {
-        $this->providerIcon = $providerIcon;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getProviderDesc()
-    {
-        return $this->providerDesc;
-    }
-
-    /**
-     * @param string $providerDesc
-     */
-    public function setProviderDesc($providerDesc)
-    {
-        $this->providerDesc = $providerDesc;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getUsageAll()
-    {
-        return $this->usageAll;
-    }
-
-    /**
-     * @param int $usageAll
-     */
-    public function setUsageAll($usageAll)
-    {
-        $this->usageAll = $usageAll;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getUsageCustomer()
-    {
-        return $this->usageCustomer;
-    }
-
-    /**
-     * @param int $usageCustomer
-     */
-    public function setUsageCustomer($usageCustomer)
-    {
-        $this->usageAll = $usageCustomer;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUsageOwner()
-    {
-        return $this->usageOwner;
-    }
-
-    /**
-     * @param int $usageOwner
-     */
-    public function setUsageOwner($usageOwner)
-    {
-        $this->usageOwner = $usageOwner;
+        if ($usage instanceof Usage) {
+            $this->usage = $usage;
+        } elseif (is_array($usage)) {
+            $this->usage = new Usage($usage);
+        }
     }
 
     /**

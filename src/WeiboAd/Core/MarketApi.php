@@ -37,7 +37,7 @@ class MarketApi extends AbstractApi
     }
     /*获取数据市场数据包信息
      *@param $id
-     * @return mixed
+     * @return Market
      * */
     public  function info($id)
     {
