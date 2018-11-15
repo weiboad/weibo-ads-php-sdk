@@ -13,7 +13,7 @@ class AudienceApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/audiences/info/1', 'GET')->willReturn(['id' => 1]);
+        $apiRequest->method('call')->with('/audiences/1', 'GET')->willReturn(['id' => 1]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $audienceApi = new AudienceApi($api);
         $r = $audienceApi->read(1);
@@ -24,7 +24,7 @@ class AudienceApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/audiences/list?page=1&page_size=10&name=audience_title', 'GET')->willReturn(['list' =>['id' => 1]]);
+        $apiRequest->method('call')->with('/audiences?page=1&page_size=10&name=audience_title', 'GET')->willReturn(['list' =>['id' => 1]]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $audienceApi = new AudienceApi($api);
         $r = $audienceApi->lists('audience_title');
@@ -48,7 +48,7 @@ class AudienceApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/audiences?id=1', 'DELETE')->willReturn(['success' => 1]);
+        $apiRequest->method('call')->with('/audiences/1', 'DELETE')->willReturn(['success' => 1]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $audienceApi = new AudienceApi($api);
         $r = $audienceApi->delete(1);

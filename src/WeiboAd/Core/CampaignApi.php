@@ -12,16 +12,18 @@ use WeiboAd\Core\Entity\Campaign;
 class CampaignApi extends AbstractApi
 {
 
-    const URI_READING = "/campaigns/info/%d";
-    const URI_LIST    = "/campaigns/search";
+    const URI_READING = "/campaigns/%d";
+    const URI_LIST    = "/campaigns";
     const URI_CREATE  = "/campaigns";
     const URI_UPDATE  = "/campaigns/%d";
     const URI_DELETE  = "/campaigns/%d";
+    const STATUS_UPDATE = "/campaigns/status/%d";
 
-    /**
+    /*读取单个广告系列
      * @param $campaignId
      * @return Campaign
      */
+
     public function read($campaignId)
     {
         $scheme = sprintf(self::URI_READING, $campaignId);
@@ -29,7 +31,7 @@ class CampaignApi extends AbstractApi
         return new Campaign($data);
     }
 
-    /**
+    /*广告系列列表
      * @param string $name
      * @param int $objective   @see WeiboAd\Core\Constant\MarketingObjective
      * @param int $budget
@@ -66,7 +68,7 @@ class CampaignApi extends AbstractApi
     }
 
 
-    /**
+    /*创建广告系列
      * @param Campaign $campaign
      * @return Campaign
      */
@@ -80,8 +82,8 @@ class CampaignApi extends AbstractApi
         return new Campaign($data);
     }
 
-    /**
-     *
+    /*
+     *更新状态
      * @param $campaignId
      * @param $status  @see WeiboAd\Core\Constant\ConfiguredStatus
      *
@@ -89,13 +91,13 @@ class CampaignApi extends AbstractApi
      */
     public function updateStatus($campaignId, $status)
     {
-        $scheme = sprintf(self::URI_UPDATE, $campaignId);
+        $scheme = sprintf(self::STATUS_UPDATE, $campaignId);
         $putData = ['update_status' => true, 'configured_status' => $status];
         $data = $this->api->getApiRequest()->call($scheme, 'PUT', $putData);
         return new Campaign($data);
     }
 
-    /**
+    /*修改广告系列
      * @param Campaign $campaign
      * @return Campaign
      */
@@ -107,7 +109,7 @@ class CampaignApi extends AbstractApi
         return new Campaign($data);
     }
 
-    /**
+    /*删除广告系列
      * @param $campaignId
      * @return Campaign
      */

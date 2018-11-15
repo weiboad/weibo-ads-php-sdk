@@ -14,7 +14,7 @@ class ADsApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/ads/info/1', 'GET')->willReturn(['id' => 1]);
+        $apiRequest->method('call')->with('/ads/1', 'GET')->willReturn(['id' => 1]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $adsApi = new ADsApi($api);
         $r = $adsApi->read(1);
@@ -25,7 +25,7 @@ class ADsApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/ads/search?page=1&page_size=10&name=ad_title', 'GET')->willReturn(['list' =>['id' => 1]]);
+        $apiRequest->method('call')->with('/ads?page=1&page_size=10&name=ad_title', 'GET')->willReturn(['list' =>['id' => 1]]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $adsApi = new ADsApi($api);
         $r = $adsApi->lists('ad_title');
@@ -75,7 +75,7 @@ class ADsApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/ads/updatestatus', 'POST')->willReturn(['list' => ['id' => 1, 'name' => 'ad_title', 'configured_status' => 0, 'effective_status' => 0]]);
+        $apiRequest->method('call')->with('/ads/status', 'PUT')->willReturn(['list' => ['id' => 1, 'name' => 'ad_title', 'configured_status' => 0, 'effective_status' => 0]]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $adsApi = new ADsApi($api);
         $r = $adsApi->updateStatus(1, ConfiguredStatus::PAUSE);
@@ -132,15 +132,15 @@ class ADsApiTest extends AbstractTestCase
         $this->assertEquals(6000, $r['list']['sum_fine']);
     }
 
-    public function testGetTopic()
+    public function testGetTopicSearch()
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $url = '/ads/topic';
+        $url = '/ads/topic-search';
         $apiRequest->method('call')->with($url, 'GET')->willReturn(['list' => [['follow' => 123, 'id' => 'id', 'topicName' => '王源']]]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $adsApi = new ADsApi($api);
-        $r = $adsApi->getTopic();
+        $r = $adsApi->getTopicSearch();
         $this->assertEquals(123, $r['list'][0]['follow']);
     }
 
@@ -166,6 +166,54 @@ class ADsApiTest extends AbstractTestCase
         $adsApi = new ADsApi($api);
         $r = $adsApi->getMid("http://weibo.com/1656783065/F6AOUl7pA?from=page_1005051656783065_profile&wvr=6&mod=weibotime&type=comment#_rnd1500261404282");
         $this->assertEquals('4079855484080351', $r['list'][0]['mid']);
+    }
+
+    public function testGetCoverage()
+    {
+        $api = $this->getMockApi();
+        $apiRequest = $this->getMockApiRequest();
+        $url = '/ads/coverage?objective=88010001' .'&billing_type=2'. '&targeting=' . json_encode(['age_min' => 8, 'age_max' => 10, 'genders' => 401]) ;
+        $apiRequest->method('call')->with($url, 'GET')->willReturn(['number'=> "约7,000用户"]);
+        $api->method("getApiRequest")->willReturn($apiRequest);
+        $adsApi = new ADsApi($api);
+        $r = $adsApi->getCoverage(8,10,401,88010001,2);
+        $this->assertEquals('约7,000用户', $r['number']);
+
+    }
+
+
+    public function testGetAccurateInterest()
+    {
+        $api = $this->getMockApi();
+        $apiRequest = $this->getMockApiRequest();
+        $apiRequest->method('call')->with('/ads/accurate-interest', 'GET')->willReturn(['list' => ['count'=> '27789830']]);
+        $api->method("getApiRequest")->willReturn($apiRequest);
+        $adsApi = new ADsApi($api);
+        $r = $adsApi->getAccurateInterest();
+        $this->assertEquals(27789830, $r['list']['count']);
+    }
+
+    public function testGetSimilarAccount()
+    {
+        $api = $this->getMockApi();
+        $apiRequest = $this->getMockApiRequest();
+        $apiRequest->method('call')->with('/ads/similar-account?customer_id=2429264874', 'GET')->willReturn(['result' => ['list'=>['id' => 1796217437]]]);
+        $api->method("getApiRequest")->willReturn($apiRequest);
+        $adsApi = new ADsApi($api);
+        $r = $adsApi->getSimilarAccount(2429264874);
+        $this->assertEquals(1796217437, $r['result']['list']['id']);
+    }
+
+
+    public function testTopicRecommend()
+    {
+        $api = $this->getMockApi();
+        $apiRequest = $this->getMockApiRequest();
+        $apiRequest->method('call')->with('/ads/topic-recommend', 'GET')->willReturn(['list' => ['follow'=> '862534971']]);
+        $api->method("getApiRequest")->willReturn($apiRequest);
+        $adsApi = new ADsApi($api);
+        $r = $adsApi->getTopicRecommend();
+        $this->assertEquals('862534971', $r['list']['follow']);
     }
 
 }

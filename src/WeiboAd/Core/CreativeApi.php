@@ -12,14 +12,18 @@ use WeiboAd\Collection;
 class CreativeApi extends AbstractApi
 {
 
-    const URI_READING = "/creatives/info/%d";
-    const URI_LIST    = "/creatives/search";
+    const URI_READING = "/creatives/%d";
+    const URI_LIST    = "/creatives";
     const URI_CREATE  = "/creatives";
     const URI_UPDATE  = "/creatives/%d";
+    const URI_UPDATE_STATUS = "/creatives/status/%d";
     const URI_DELETE  = "/creatives/%d";
-    const URI_CREATE_TAG = '/tags';
+    const URI_CREATE_TAG = "/creatives/tags";
+    const URI_CREATE_INDUSTRY= "/creatives/industry";
+    const URI_CREATE_LINK = "/creatives/hyperlink";
 
-    /**
+
+    /*创意详情
      * @param $creativeId
      * @return Creative
      */
@@ -30,7 +34,7 @@ class CreativeApi extends AbstractApi
         return new Creative($data);
     }
 
-    /**
+    /*创意创建
      * @param Creative $creative
      * @return Creative
      */
@@ -58,7 +62,7 @@ class CreativeApi extends AbstractApi
         return $this->create($creative);
     }
 
-    /**
+    /*更新创意
      * @param $creativeId
      * @param $monitorType
      * @param $monitor
@@ -77,20 +81,20 @@ class CreativeApi extends AbstractApi
         return new Creative($data);
     }
 
-    /**
+    /*更新创意状态
      * @param $creativeId
      * @param $status @see WeiboAd\Core\Constant\CreativeConfiguredStatus
      * @return mixed
      */
     public function updateStatus($creativeId, $status)
     {
-        $scheme = sprintf(self::URI_UPDATE, $creativeId);
+        $scheme = sprintf(self::URI_UPDATE_STATUS, $creativeId);
         $putData = ['update_status' => true, 'status' => $status];
         return $this->api->getApiRequest()->call($scheme, 'PUT',$putData);
     }
 
 
-    /**
+    /*创意列表
      * @param string $name
      * @param int $adId
      * @param int $page
@@ -117,7 +121,7 @@ class CreativeApi extends AbstractApi
         return $data;
     }
 
-    /**
+    /*删除创意
      * @param $creativeId
      * @return mixed
      */
@@ -127,7 +131,7 @@ class CreativeApi extends AbstractApi
         return $this->api->getApiRequest()->call($scheme, 'DELETE');
     }
 
-    /**
+    /*创建标签
      * @param array $photoUrl
      * @param array $photoTags
      * @param $tagDesc
@@ -146,5 +150,31 @@ class CreativeApi extends AbstractApi
         ];
         return $this->api->getApiRequest()->call(self::URI_CREATE_TAG, 'POST',$postData);
     }
+
+    /*创意所属行业
+     *
+    */
+    public function createIndustry()
+    {
+        $scheme = sprintf(self::URI_CREATE_INDUSTRY);
+        return  $this->api->getApiRequest()->call($scheme, 'GET');
+    }
+
+
+    /*创建创意链接
+     * @param $url
+     * @param $dispalyName
+     */
+
+    public function createLink($url, $dispalyName)
+    {
+        $postData = [
+            'url'     => $url,
+            'dispaly_name'  => $dispalyName,
+        ];
+        return $this->api->getApiRequest()->call(self::URI_CREATE_LINK, 'POST',$postData);
+    }
+
+
 
 }

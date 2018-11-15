@@ -19,16 +19,16 @@ class AccountApiTest extends AbstractTestCase
         $this->assertEquals(1, $r->getId());
     }
 
-    public function testAsset()
+    public function testBudget()
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method("call")->with('/account/asset','GET')->willReturn(['balance' => 100,'real_time_consume' => 9.19]);
+        $apiRequest->method("call")->with('/account/budget','PUT')->willReturn(['configured_status' => 1,'id' => 34]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $accountApi = new AccountApi($api);
-        $r = $accountApi->asset();
-        $this->assertEquals(100, $r['balance']);
-        $this->assertEquals(9.19, $r['real_time_consume']);
+        $r = $accountApi->budget();
+        $this->assertEquals(1, $r['configured_status']);
+        $this->assertEquals(34, $r['id']);
     }
 
 

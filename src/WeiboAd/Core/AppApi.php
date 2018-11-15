@@ -12,13 +12,13 @@ use WeiboAd\Core\Entity\App;
  */
 class AppApi extends AbstractApi
 {
-    const URI_LIST      = "/app/list";
+    const URI_LIST      = "/apps";
     const URI_UPLOAD    = "/app";
     const URI_ADD       = "/app/insert";
-    const URI_CATEGORY  = "/app/category";
+    const URI_CATEGORY  = "/apps/category";
 
 
-    /**
+    /*应用列表
      * @param string $name
      * @param int $status
      * @param int $page
@@ -49,7 +49,7 @@ class AppApi extends AbstractApi
         return $data;
     }
 
-    /**
+    /*应用市场分类
      * @return mixed
      */
     public function category()

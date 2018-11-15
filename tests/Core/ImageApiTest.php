@@ -36,7 +36,7 @@ class ImageApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/image', 'POST')->willReturn(['id' => 1, 'pic_id' => 'e06601f1jw1faie2emzv6j21dg0rads7']);
+        $apiRequest->method('call')->with('/openapi/image', 'POST')->willReturn(['pic_id' => 'e06601f1jw1faie2emzv6j21dg0rads7']);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $imageApi = new ImageApi($api);
         $r = $imageApi->upload('image_name', "file_stream");

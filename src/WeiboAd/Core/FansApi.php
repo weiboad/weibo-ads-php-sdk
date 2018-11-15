@@ -18,7 +18,7 @@ class FansApi extends AbstractApi
     const URI_OFFLINE = '/fans/offline';
 
 
-    /**
+    /*映射信息
      * @param string $type
      * @return mixed
      */
@@ -31,7 +31,8 @@ class FansApi extends AbstractApi
         return $this->api->getApiRequest()->call($url, 'GET');
     }
 
-    /**
+    /*价格信息
+     * @param $uid
      * @param $mid
      * @param string $fansTop
      * @param string $nonFans
@@ -39,11 +40,13 @@ class FansApi extends AbstractApi
      * @param string $designate
      * @param string $cbd
      * @param string $target
+     * @param $signature
+     * @param $timestamp
      * @return mixed
      */
-    public function getPrice($mid, $fansTop = "", $nonFans= "", $trade= "", $designate = "", $cbd = "", $target = "")
+    public function getPrice($uid, $mid, $fansTop = "", $nonFans= "", $trade= "", $designate = "", $cbd = "", $target = "", $signature, $timestamp)
     {
-        $url = self::URI_PRICE . "?mid=" . $mid;
+        $url = self::URI_PRICE ."?uid=" . $uid . "&mid=" . $mid . "&signature=" . $signature . "&timestamp=" . $timestamp;
         if ($fansTop != "") {
             $url .= "&fanstop=" . $fansTop;
         }
@@ -65,18 +68,18 @@ class FansApi extends AbstractApi
         return $this->api->getApiRequest()->call($url, 'GET');
     }
 
-    /**
+    /*获取博文代投价格信息
      * @param $mid
      * @param $toUid
      * @return mixed
      */
-    public function getAdvancePrice($mid, $toUid)
+    public function getAdvancePrice($uid, $mid, $toUid)
     {
-        $url = self::URI_PRICE_ADVANCE . "?mid=" . $mid . "&touid=" . $toUid;
+        $url = self::URI_PRICE_ADVANCE . "?uid=" . $uid ."&mid=" . $mid . "&touid=" . $toUid;
         return $this->api->getApiRequest()->call($url, 'GET');
     }
 
-    /**
+    /*投放信息
      * @param $adId
      * @return mixed
      */
@@ -86,18 +89,21 @@ class FansApi extends AbstractApi
         return $this->api->getApiRequest()->call($url, 'GET');
     }
 
-    /**
+    /*获取余量
+     * @param $uid
      * @param $mid
      * @param string $fansTop
      * @param string $nonFans
      * @param string $trade
      * @param string $designate
      * @param string $cbd
+     * @param $signature
+     * @param $timestamp
      * @return mixed
      */
-    public function getRemain($mid, $fansTop = "", $nonFans= "", $trade= "", $designate = "", $cbd = "")
+    public function getRemain($uid, $mid, $fansTop = "", $nonFans= "", $trade= "", $designate = "", $cbd = "", $signature, $timestamp)
     {
-        $url = self::URI_REMAIN . "?mid=" . $mid;
+        $url = self::URI_REMAIN ."?uid=" . $uid . "&mid=" . $mid . "&signature=" . $signature. "&timestamp=" . $timestamp;
         if ($fansTop != "") {
             $url .= "&fanstop=" . $fansTop;
         }
@@ -116,7 +122,8 @@ class FansApi extends AbstractApi
         return $this->api->getApiRequest()->call($url, 'GET');
     }
 
-    /**
+    /*投放
+     * @param $uid
      * @param $mid
      * @param string $adsUid
      * @param string $fansTop
@@ -127,9 +134,10 @@ class FansApi extends AbstractApi
      * @param string $target
      * @return mixed
      */
-    public function setPromote($mid, $adsUid = "", $fansTop = "", $nonFans= "", $trade= "", $designate = "", $cbd = "", $target = "")
+    public function setPromote($uid, $mid, $adsUid = "", $fansTop = "", $nonFans= "", $trade= "", $designate = "", $cbd = "", $target = "")
     {
-        $param = ["mid" => $mid];
+        $param = ["uid" => $uid,
+                  "mid" => $mid];
         if ($adsUid != "") {
             $param['adsuid'] = $adsUid;
         }
@@ -155,7 +163,8 @@ class FansApi extends AbstractApi
     }
 
 
-    /**
+    /*代投
+     * @param $uid
      * @param $mid
      * @param $toUid
      * @param string $adsUid
@@ -163,9 +172,9 @@ class FansApi extends AbstractApi
      * @param string $sponsor
      * @return mixed
      */
-    public function setAdvancePromote($mid, $toUid, $adsUid = "", $duration = "", $sponsor = "")
+    public function setAdvancePromote($uid, $mid, $toUid, $adsUid = "", $duration = "", $sponsor = "")
     {
-        $param = ["mid" => $mid, "touid" => $toUid];
+        $param = ["uid" => $uid, "mid" => $mid, "touid" => $toUid];
         if ($adsUid != "") {
             $param['adsuid'] = $adsUid;
         }
@@ -179,7 +188,7 @@ class FansApi extends AbstractApi
     }
 
 
-    /**
+    /*下线投放
      * @param $adId
      * @return mixed
      */

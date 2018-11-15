@@ -17,8 +17,8 @@ class MarketApi extends AbstractApi
     const URI_INFO = "/market/info/%d";
     const URI_DATA = "/market/industry_data";
 
-    /**
-     *获取数据市场数据包列表
+    /*
+     *获取广告数据包数据市场列表
      * @param $type
      * @return mixed
      */
@@ -46,7 +46,7 @@ class MarketApi extends AbstractApi
         return new Market($data);
     }
 
-    /**获取数据市场数据包行业报表
+    /*获取数据市场数据包行业报表
      * @param $id, $type
      * @param int $page
      * @param int $pageSize

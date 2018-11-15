@@ -13,21 +13,25 @@ use WeiboAd\Exception\InvalidArgumentException;
 class ADsApi extends AbstractApi
 {
 
-    const URI_READING = "/ads/info/%d";
-    const URI_LIST    = "/ads/search";
+    const URI_READING = "/ads/%d";
+    const URI_LIST    = "/ads";
     const URI_CREATE  = "/ads";
     const URI_UPDATE  = "/ads/%d";
     const URI_DELETE  = "/ads/%d";
-    const URI_TOPIC   = "/ads/topic";
+    const URI_TOPIC   = "/ads/topic-search";
     const URI_DESIGNATED_ACCOUNT   = "/ads/designated-account";
     const URI_MID     = "/ads/mid";
-    const URI_UPDATE_STATUS  = "/ads/updatestatus";
+    const URI_UPDATE_STATUS  = "/ads/status";
     const URI_TARGET_MAP        = "/ads/targetmap";
     const URI_GUARANTEE         = "/ads/guarantee";
     const URI_GUARANTEE_PRICE   = "/ads/guarantee/price";
     const URI_GUARANTEE_PRICE_RELEASE  = "/ads/guarantee/price-release";
+    const URI_COVERAGE = "/ads/coverage";
+    const URI_ACCURATE_INTEREST = "/ads/accurate-interest";
+    const URI_SIMILAR_ACCOUNT = "/ads/similar-account";
+    const URI_TOPIC_RECOMMEND = "/ads/topic-recommend";
 
-    /**
+    /*读取单条广告计划
      * @param $id
      * @return ADs
      */
@@ -38,7 +42,7 @@ class ADsApi extends AbstractApi
         return new ADs($data);
     }
 
-    /**
+    /*广告计划列表
      * @param string $name
      * @param int $campaignId
      * @param int $objective
@@ -74,7 +78,7 @@ class ADsApi extends AbstractApi
         return $data;
     }
 
-    /**
+    /*广告计划创建
      * @param ADs $ads
      * @return ADs
      */
@@ -94,7 +98,7 @@ class ADsApi extends AbstractApi
         return new ADs($data);
     }
 
-    /**
+    /*广告计划修改
      * @param ADs $ads
      * @return ADs
      */
@@ -115,8 +119,8 @@ class ADsApi extends AbstractApi
     }
 
 
-    /**
-     *
+    /*
+     *广告计划修改状态
      * @param $adId
      * @param $status  @see WeiboAd\Core\Constant\ConfiguredStatus
      *
@@ -126,7 +130,7 @@ class ADsApi extends AbstractApi
     {
         $scheme = self::URI_UPDATE_STATUS;
         $putData = ['configured_status' => $status, 'id' => $adId];
-        $data = $this->api->getApiRequest()->call($scheme, 'POST',$putData);
+        $data = $this->api->getApiRequest()->call($scheme, 'PUT',$putData);
         if(isset($data['list'])) {
             $collection = new Collection();
             foreach ($data['list'] as $value) {
@@ -137,7 +141,7 @@ class ADsApi extends AbstractApi
         return $data;
     }
 
-    /**
+    /*广告计划删除
      * @param $adId
      * @return mixed
      */
@@ -147,7 +151,7 @@ class ADsApi extends AbstractApi
         return  $this->api->getApiRequest()->call($scheme, 'DELETE');
     }
 
-    /**
+    /*广告计划定向条件码表
      * @param array $target
      * @return mixed
      */
@@ -161,7 +165,7 @@ class ADsApi extends AbstractApi
         return $this->api->getApiRequest()->call($scheme, 'GET');
     }
 
-    /**
+    /*定价保量可预定量
      * @param $ageMin
      * @param $ageMax
      * @param $gender
@@ -186,7 +190,7 @@ class ADsApi extends AbstractApi
         return $this->api->getApiRequest()->call($scheme, 'GET');
     }
 
-    /**
+    /*获取定价保量预定费用
      * @param $ageMin
      * @param $ageMax
      * @param $gender
@@ -211,7 +215,7 @@ class ADsApi extends AbstractApi
         return $this->api->getApiRequest()->call($scheme, 'GET');
     }
 
-    /**
+    /*获取定价保量释放费用
      * @param $adId
      * @param array $scheduleIds
      * @return mixed
@@ -221,11 +225,11 @@ class ADsApi extends AbstractApi
         return $this->api->getApiRequest()->call($scheme, 'GET');
     }
 
-    /**
+    /*话题搜索
      * @param string $keyword
      * @return mixed
      */
-    public function getTopic($keyword = "")
+    public function getTopicSearch($keyword = "")
     {
         $scheme = self::URI_TOPIC;
         if ($keyword) {
@@ -234,7 +238,7 @@ class ADsApi extends AbstractApi
         return $this->api->getApiRequest()->call($scheme, 'GET');
     }
 
-    /**
+    /*通过微博url获取mid
      * @param $url
      * @return mixed
      */
@@ -248,7 +252,7 @@ class ADsApi extends AbstractApi
         return $this->api->getApiRequest()->call($scheme, 'GET');
     }
 
-    /**
+    /*获取指定账号推荐信息
      * @param string $keyword
      * @return mixed
      *
@@ -259,6 +263,45 @@ class ADsApi extends AbstractApi
         if ($keyword) {
             $scheme .= "?keyword=" . $keyword;
         }
+        return $this->api->getApiRequest()->call($scheme, 'GET');
+    }
+
+    /*
+     * 获取人群覆盖
+     * @param string $targeting , int $objective, int $billingType
+     */
+    public function getCoverage($ageMin, $ageMax, $gender, $objective, $billingType)
+    {
+        $params = ['age_min' => $ageMin, 'age_max' => $ageMax, 'genders' => $gender];
+        $scheme = self::URI_COVERAGE . "?objective=" . $objective . "&billing_type=" . $billingType ."&targeting="  . json_encode($params) ;
+        return $this->api->getApiRequest()->call($scheme, 'GET');
+
+    }
+
+    /*获取精准兴趣信息
+     *
+     */
+    public function getAccurateInterest()
+    {
+        $scheme = sprintf(self::URI_ACCURATE_INTEREST);
+        return $this->api->getApiRequest()->call($scheme, 'GET');
+    }
+
+    /*
+     * 相似账号推荐信息
+     */
+    public function getSimilarAccount($customerId)
+    {
+        $scheme = self::URI_SIMILAR_ACCOUNT . "?customer_id=" . $customerId;
+        return  $this->api->getApiRequest()->call($scheme, 'GET');
+    }
+
+    /*
+     * 话题推荐
+     */
+    public function getTopicRecommend()
+    {
+        $scheme = sprintf(self::URI_TOPIC_RECOMMEND);
         return $this->api->getApiRequest()->call($scheme, 'GET');
     }
 
