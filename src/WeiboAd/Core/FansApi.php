@@ -10,8 +10,8 @@ class FansApi extends AbstractApi
 {
     const URI_MAPPING = "/fans/mapping";
     const URI_PRICE   = "/fans/price";
-    const URI_PRICE_ADVANCE  = "/fans/advance_price";
-    const URI_PROMOTE_DATA  = "/fans/promote_data";
+    const URI_PRICE_ADVANCE  = "/fans/advance-price";
+    const URI_PROMOTE_DATA  = "/fans/promote-data";
     const URI_REMAIN  = "/fans/remain";
     const URI_PROMOTE = '/fans/promote';
     const URI_ADVANCE = '/fans/advance';

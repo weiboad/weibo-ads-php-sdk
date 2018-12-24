@@ -8,7 +8,7 @@ use WeiboAdTest\AbstractTestCase;
 class AccountApiTest extends AbstractTestCase
 {
 
-    public function testAccount()
+    public function testRead()
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
@@ -26,7 +26,7 @@ class AccountApiTest extends AbstractTestCase
         $apiRequest->method("call")->with('/account/budget','PUT')->willReturn(['configured_status' => 1,'id' => 34]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $accountApi = new AccountApi($api);
-        $r = $accountApi->budget();
+        $r = $accountApi->budget('100.00');
         $this->assertEquals(1, $r['configured_status']);
         $this->assertEquals(34, $r['id']);
     }

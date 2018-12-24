@@ -27,9 +27,11 @@ class AccountApi extends AbstractApi
     /*获取日限额
      * return mixed;
      */
-    public function budget()
+    public function budget($spendCap)
     {
-        return  $this->api->getApiRequest()->call(self::URI_ASSET, 'PUT');
+        $scheme = self::URI_ASSET;
+        $putData = ['spend_cap' => $spendCap];
+        return  $this->api->getApiRequest()->call($scheme, 'PUT', $putData);
     }
 
 

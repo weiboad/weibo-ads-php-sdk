@@ -89,7 +89,7 @@ class CreativeApi extends AbstractApi
     public function updateStatus($creativeId, $status)
     {
         $scheme = sprintf(self::URI_UPDATE_STATUS, $creativeId);
-        $putData = ['update_status' => true, 'status' => $status];
+        $putData = ['status' => $status];
         return $this->api->getApiRequest()->call($scheme, 'PUT',$putData);
     }
 

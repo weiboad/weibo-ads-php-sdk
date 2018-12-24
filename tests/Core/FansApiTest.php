@@ -36,10 +36,10 @@ class FansApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/fans/remain?uid=3975309&mid=41878140887231123&signature=signature&timestamp=timestamp&designate=20051,20052', 'GET')->willReturn(['designate' => [20051, 20052]]);
+        $apiRequest->method('call')->with('/fans/remain?uid=3975309&mid=41878140887231123&signature=signature&timestamp=timestamp', 'GET')->willReturn(['designate' => [20051, 20052]]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $fansApi = new FansApi($api);
-        $ret = $fansApi->getRemain("3975309","41878140887231123", "",  "", "", "20051,20052", "","signature","timestamp");
+        $ret = $fansApi->getRemain("3975309","41878140887231123", "",  "", "", "", "","signature","timestamp");
         $this->assertArrayHasKey("designate", $ret);
     }
 
@@ -47,7 +47,7 @@ class FansApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/fans/advance_price?uid=3975309&mid=41878140887231123&touid=2608812381', 'GET')->willReturn(['price' => 0]);
+        $apiRequest->method('call')->with('/fans/advance-price?uid=3975309&mid=41878140887231123&touid=2608812381', 'GET')->willReturn(['price' => 0]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $fansApi = new FansApi($api);
         $ret = $fansApi->getAdvancePrice("3975309","41878140887231123", 2608812381);
@@ -58,7 +58,7 @@ class FansApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/fans/promote_data?adid=170603250165822062', 'GET')->willReturn(['interactive' => []]);
+        $apiRequest->method('call')->with('/fans/promote-data?adid=170603250165822062', 'GET')->willReturn(['interactive' => []]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $fansApi = new FansApi($api);
         $ret = $fansApi->getPromoteData("170603250165822062");

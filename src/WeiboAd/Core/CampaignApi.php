@@ -64,6 +64,7 @@ class CampaignApi extends AbstractApi
             }
             $data['list'] = $collection;
         }
+
         return $data;
     }
 
@@ -92,7 +93,8 @@ class CampaignApi extends AbstractApi
     public function updateStatus($campaignId, $status)
     {
         $scheme = sprintf(self::STATUS_UPDATE, $campaignId);
-        $putData = ['update_status' => true, 'configured_status' => $status];
+        $putData = ['update_status' => true, 'status' => $status];
+        //var_dump($putData);
         $data = $this->api->getApiRequest()->call($scheme, 'PUT', $putData);
         return new Campaign($data);
     }
@@ -105,6 +107,14 @@ class CampaignApi extends AbstractApi
     {
         $scheme = sprintf(self::URI_UPDATE, $campaign->getId());
         $putData = $this->entityToArray($campaign);
+        foreach ($putData as $k => $v) {
+            if (is_array($v)) {
+                if (empty($v)) {
+                    unset($putData[$k]);
+                }
+                $putData[$k] = json_encode($v);
+            }
+        }
         $data = $this->api->getApiRequest()->call($scheme, 'PUT', $putData);
         return new Campaign($data);
     }

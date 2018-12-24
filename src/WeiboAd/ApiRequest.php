@@ -12,6 +12,7 @@ use WeiboAd\Exception\ApiException;
 class ApiRequest
 {
     const API_BASE_URL = "https://api.biz.weibo.com/";
+    //const API_BASE_URL = "http://10.222.57.182:19001/";
 
     const HTTP_CODE_OK = 200;
 
@@ -86,7 +87,9 @@ class ApiRequest
 
         $options =  [
             "http_errors" => false,
-            'headers'     => ['Authorization' => 'Bearer ' . $this->api->getToken()]
+            'headers'     => ['Authorization' => 'Bearer ' . $this->api->getToken(),
+                    'Accept'=> "application/json,application/text+gw2.0"
+                ]
         ];
         if ($body) {
             $options['body'] = $body;

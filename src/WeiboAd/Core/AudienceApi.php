@@ -42,7 +42,7 @@ class AudienceApi extends AbstractApi
         return new Audience($data);
     }
 
-    /**
+    /*
      * @param $dataFormat
      * @param $fileStream
      * @param $isMd5

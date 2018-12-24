@@ -21,7 +21,7 @@ class ADsApi extends AbstractApi
     const URI_TOPIC   = "/ads/topic-search";
     const URI_DESIGNATED_ACCOUNT   = "/ads/designated-account";
     const URI_MID     = "/ads/mid";
-    const URI_UPDATE_STATUS  = "/ads/status";
+    const URI_UPDATE_STATUS  = "/ads/status/%d";
     const URI_TARGET_MAP        = "/ads/targetmap";
     const URI_GUARANTEE         = "/ads/guarantee";
     const URI_GUARANTEE_PRICE   = "/ads/guarantee/price";
@@ -128,8 +128,8 @@ class ADsApi extends AbstractApi
      */
     public function updateStatus($adId, $status)
     {
-        $scheme = self::URI_UPDATE_STATUS;
-        $putData = ['configured_status' => $status, 'id' => $adId];
+        $scheme = sprintf(self::URI_UPDATE_STATUS, $adId);
+        $putData = ['status' => $status];
         $data = $this->api->getApiRequest()->call($scheme, 'PUT',$putData);
         if(isset($data['list'])) {
             $collection = new Collection();
@@ -176,16 +176,7 @@ class ADsApi extends AbstractApi
      */
     public function guarantee($ageMin, $ageMax, $gender, array $locations = [], $interests = [], $os = [])
     {
-        $params = ['age_min' => $ageMin, 'age_max' => $ageMax, 'genders' => $gender];
-        if ($locations) {
-            $params['geo_locations'] = $locations;
-        }
-        if ($interests) {
-            $params['category_interests'] = $interests;
-        }
-        if ($os) {
-            $params['user_os'] = $os;
-        }
+        $params = ['age_min' => $ageMin, 'age_max' => $ageMax, 'genders' => $gender, 'geo_locations' => $locations, 'category_interests' => $interests, 'user_os' => $os];
         $scheme = self::URI_GUARANTEE . "?targeting=" . json_encode($params);
         return $this->api->getApiRequest()->call($scheme, 'GET');
     }

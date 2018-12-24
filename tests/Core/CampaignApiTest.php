@@ -75,10 +75,10 @@ class CampaignApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/campaigns/status/1', 'PUT')->willReturn(['list'=>['id' => 1, 'name' => 'campaign_title', 'configure_status' => 0, 'effective_status' => 0]]);
+        $apiRequest->method('call')->with('/campaigns/status/1', 'PUT')->willReturn(['id' => 1, 'name' => 'campaign_title', 'configuredStatus' => 1]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $campaignApi = new CampaignApi($api);
         $r = $campaignApi->updateStatus(1, ConfiguredStatus::PAUSE);
-        $this->assertEquals(0, $r->getConfiguredStatus());
+        $this->assertEquals(1, $r->getConfiguredStatus());
     }
 }

@@ -93,11 +93,11 @@ class CreativeApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/creatives/status/1', 'PUT')->willReturn(['id' => 1, 'name' => 'creative_title2', 'configured_status' => 0, 'effective_status' => 0]);
+        $apiRequest->method('call')->with('/creatives/status/1', 'PUT')->willReturn(['success' => 1]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $creativeApi = new CreativeApi($api);
         $r = $creativeApi->updateStatus(1, ConfiguredStatus::PAUSE);
-        $this->assertEquals(0, $r['configured_status']);
+        $this->assertEquals(1, $r['success']);
     }
 
     public function testCreateTag()

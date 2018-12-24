@@ -75,7 +75,7 @@ class ADsApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/ads/status', 'PUT')->willReturn(['list' => ['id' => 1, 'name' => 'ad_title', 'configured_status' => 0, 'effective_status' => 0]]);
+        $apiRequest->method('call')->with('/ads/status/1', 'PUT')->willReturn(['list' => ['id' => 1, 'name' => 'ad_title', 'configured_status' => 0, 'effective_status' => 0]]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $adsApi = new ADsApi($api);
         $r = $adsApi->updateStatus(1, ConfiguredStatus::PAUSE);
@@ -98,11 +98,11 @@ class ADsApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $url = '/ads/guarantee?targeting=' . json_encode(['age_min' => 8, 'age_max' => 10, 'genders' => 401]);
+        $url = '/ads/guarantee?targeting=' . json_encode(['age_min' => 8, 'age_max' => 10, 'genders' => 401, 'geo_locations' => [0,401], 'category_interests' => [100402,100403], 'user_os' => [90110201,90110202,90110100]]);
         $apiRequest->method('call')->with($url, 'GET')->willReturn(['list' => ['2017-05-11' => [10 ,10 ,10]]]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $adsApi = new ADsApi($api);
-        $r = $adsApi->guarantee(8, 10,401);
+        $r = $adsApi->guarantee(8, 10,401,[0,401],[100402,100403],[90110201,90110202,90110100]);
         $this->assertCount(3, $r['list']['2017-05-11']);
     }
 

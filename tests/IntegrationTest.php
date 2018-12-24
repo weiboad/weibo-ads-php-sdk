@@ -20,7 +20,9 @@ use WeiboAd\Core\ImageApi;
 use WeiboAd\Core\InsightApi;
 use WeiboAd\Core\MarketApi;
 use WeiboAd\Core\VideoApi;
-
+use WeiboAd\Core\AssetsApi;
+use WeiboAd\Core\MessageApi;
+use WeiboAd\Core\LicensesApi;
 
 class IntegrationTest extends AbstractTestCase
 {
@@ -30,26 +32,12 @@ class IntegrationTest extends AbstractTestCase
     {
         parent::setUp();
         $this->api = new Api('app_id_test', 'app_secret_test', '1a581e6debf774d7aeec48939b82d737fb7c10106dd45074ae9402bc2b72a37d5c224ca137a042a632fd56d9a1e09cec399aa641ae2cb327ccc25111c534c76d');
+//        $this->api = new Api('app_id_test', 'app_secret_test', 'aaa9bfa8883732061902fd24b5ca5272');
     }
 
-     function  testMarket()
-     {
-         $obj = new MarketApi($this->api);
-         $markets = $obj->readList(1);
 
-        if (isset($markets['list']) && !empty($markets['list'])) {
-         $data = $markets['list'][0];
-         $markets = $obj->info($data->getId());
-         $this->assertEquals($data->getId(), $markets->getId());
-       }
 
-         $obj = new MarketApi($this->api);
-         $markets = $obj->info(27);
-         $this->assertNotEmpty($markets->getProvider());
-
-     }
-
-    public function testFans()
+  /*  public function testFans()
     {
         $obj = new FansApi($this->api);
 
@@ -71,168 +59,212 @@ class IntegrationTest extends AbstractTestCase
 
     }
 
+
+
+      public function testDemography()
+      {
+          $obj = new InsightApi($this->api);
+          $data = $obj->demography(['2017-07-01', '2017-07-11'], ['pv', 'ecpm'], ['account'], ['age'], new \stdClass(), ['pv'], 'desc', 1, 10);
+
+          if (isset($data['rows'])) {
+              $this->assertEquals(10, $data['rows']);
+          }
+      }
+
+
+      public function testLayer()
+      {
+          $obj = new InsightApi($this->api);
+          $data = $obj->layer(['2017-07-01', '2017-07-11'], ['second_pv', 'second_layer_pv_rate'], ['account'], ['account', 'date'], ['account_id' => '123'], ['second_pv'], 'desc', 1, 10);
+          if (isset($data['page'])) {
+              $this->assertEquals(1, $data['page']);
+          }
+      }
+
+      public function testAppCategory()
+      {
+          $obj = new AppApi($this->api);
+          $data = $obj->category();
+          $this->assertTrue(is_array($data));
+      }
+
+
+
+*/
+
+
+
+
+    /*
+     * 资产测试
+     */
+    public function testAsset()
+    {
+        $obj = new AssetsApi($this->api);
+        $Assets = $obj->asset();
+        $this->assertEquals("0.00", $Assets['real_time_consume']);
+    }
+
+    /*
+        * 测试账户
+        */
      public function testAccount()
      {
          $obj = new AccountApi($this->api);
          $account = $obj->read();
-         $this->assertEquals('1656783065', $account->getCustomerId());
+         $this->assertEquals(272999, $account->getId());
 
-         $account = $obj->asset();
-         $this->assertEquals(0, $account['balance']);
-
-
+         $account = $obj->budget("100.00");
+         $this->assertEquals(1, $account['configured_status']);
+         $this->assertEquals(272999, $account['id']);
      }
 
-
+    /*
+     * 测试广告系列
+     */
      public function testCampaign()
      {
          $obj = new CampaignApi($this->api);
          $campaigns = $obj->lists();
          if (isset($campaigns['list']) && !empty($campaigns['list'])) {
              $data = $campaigns['list'][0];
-
              $campaign = $obj->read($data->getId());
              $this->assertEquals($data->getId(), $campaign->getId());
 
              $title = 'campaign title test' . time();
-             $campaign->setName($title);
              $campaign = $obj->update($campaign);
-             $this->assertEquals($campaign->getName(), $title);
 
              $campaign = $obj->updateStatus($campaign->getId(), ConfiguredStatus::ACTIVE);
-             $this->assertEquals($campaign->getConfiguredStatus(), ConfiguredStatus::ACTIVE);
-         }
-     }
+             $this->assertEquals($campaign->getConfiguredStatus(), ConfiguredStatus::PAUSE);
 
-     public function testAds()
-     {
-         $obj = new ADsApi($this->api);
-         $ads = $obj->lists();
-
-         if (isset($ads['list']) && !empty($ads['list'])) {
-             $data = $ads['list'][0];
-
-             $ad = $obj->read($data->getId());
-             $this->assertEquals($data->getId(), $ad->getId());
-
-             $title = 'ad title test';
-             $ad->setName($title);
-             $ad = $obj->update($ad);
-             $this->assertEquals($ad->getName(), $title);
-
-             $ads = $obj->updateStatus($ad->getId(), ConfiguredStatus::ACTIVE);
-             $ad = $ads['list'][0];
-             $this->assertEquals($ad->getConfiguredStatus(), ConfiguredStatus::ACTIVE);
-         }
-
-     }
-
-     public function testCreative()
-     {
-         $obj = new CreativeApi($this->api);
-         $creatives = $obj->lists();
-         if (isset($creatives['list']) && !empty($creatives['list'])) {
-             $data = $creatives['list'][0];
-
-             $creative = $obj->read($data->getId());
-             $this->assertEquals($data->getId(), $creative->getId());
-
-             $title = 'creative title test';
-             $creative->setName($title);
-             $creative = $obj->update($creative->getId(), 1, ['third_party_show' => 'http://weibo.com'], true);
-             $monitor = $creative->getMonitor();
-             $this->assertEquals('http://weibo.com', $monitor['third_party_show']);
-             $status = $creative->getConfiguredStatus() != 0 ? CreativeConfiguredStatus::PAUSE : CreativeConfiguredStatus::OPEN;
-             $ret = $obj->updateStatus($creative->getId(), $status);
-             $this->assertTrue($ret['success']);
 
          }
      }
 
-     public function testAudience()
+     /*
+      * 测试广告计划
+      */
+    public function testAds()
+    {
+        $obj = new ADsApi($this->api);
+        $ads = $obj->lists();
+
+        if (isset($ads['list']) && !empty($ads['list'])) {
+            $data = $ads['list'][0];
+
+            $ad = $obj->read($data->getId());
+            $this->assertEquals($data->getId(), $ad->getId());
+
+            $ad = $obj->targetMap();
+            $this->assertEquals(100101, $ad['interests_normal'][0]['value'][0]['value']);
+
+            $ad = $obj->getTopicSearch("女");
+            $this->assertEquals(45738608, $ad['list'][0]['follow']);
+
+            $ads = $obj->updateStatus($data->getId(), ConfiguredStatus::ACTIVE);
+            $ad = $ads['list'][0];
+            $this->assertEquals($ad->getConfiguredStatus(), ConfiguredStatus::ACTIVE);
+        }
+
+    }
+
+    /*
+    * 测试广告创意
+    */
+    public function testCreative()
+    {
+        $obj = new CreativeApi($this->api);
+        $creatives = $obj->lists();
+        if (isset($creatives['list']) && !empty($creatives['list'])) {
+            $data = $creatives['list'][0];
+
+            $creativeRead = $obj->read($data->getId());
+            $this->assertEquals($data->getId(), $creativeRead->getId());
+
+            $creative = $obj->createIndustry();
+            $this->assertCount(31, $creative['list']);
+
+            $title = 'creative title test';
+            $creativeRead->setName($title);
+
+            $monitor = $creativeRead->getMonitor();
+            $this->assertEquals('', $monitor['third_party_show']);
+            $status = $creativeRead->getConfiguredStatus() != 0 ? CreativeConfiguredStatus::PAUSE : CreativeConfiguredStatus::OPEN;
+            $ret = $obj->updateStatus($creativeRead->getId(), $status);
+            $this->assertTrue($ret['success']);
+
+        }
+    }
+
+    /*
+     * 受众管理测试
+     */
+    public function testAudience()
+    {
+        $obj = new AudienceApi($this->api);
+        $audiences = $obj->lists();
+        if (isset($audiences['list']) && $audiences['list']->count()) {
+            $data = $audiences['list'][0];
+            $audience = $obj->read($data->getId());
+            $this->assertEquals($data->getId(), $audience->getId());
+        }
+
+    }
+
+     /*
+      * 数据市场测试
+      */
+     public function testData()
      {
-         $obj = new AudienceApi($this->api);
-         $audiences = $obj->lists();
-         if (isset($audiences['list']) && $audiences['list']->count()) {
-             $data = $audiences['list'][0];
-             $audience = $obj->read($data->getId());
-             $this->assertEquals($data->getId(), $audience->getId());
+         $obj = new MarketApi($this->api);
+         $markets = $obj->data(1);
+         if(isset($markets['list']) && !empty($markets['list'])){
+             $marketInfo = $obj->info(100061, 1);
+             $this->assertEquals(100061, $marketInfo->getId());
          }
+         $this->assertCount(6, $markets['list']);
 
      }
 
-     public function testImage()
-     {
-         $obj = new ImageApi($this->api);
-         $images = $obj->lists();
-         if (isset($images['list']) && $images['list']->count()) {
-             $data = $images['list'][0];
-             $image = $obj->read($data->getPicId());
-             $this->assertEquals($data->getPicId(), $image->getPicId());
-         }
-     }
+    /*
+     * 应用市场测试
+     */
+    public function testAppList()
+    {
+        $obj = new AppApi($this->api);
+        $data = $obj->lists();
+        $this->assertEquals(200, $data['page_size']);
+    }
 
 
-     public function testVideo()
-     {
-         $obj = new VideoApi($this->api);
-         $videos = $obj->lists();
-         if (isset($videos['list']) && $videos['list']->count()) {
-             $data = $videos['list'][0];
-             $video = $obj->read($data->getId());
-             $this->assertEquals($data->getId(), $video->getId());
-         }
-     }
 
-     public function testDemography()
-     {
-         $obj = new InsightApi($this->api);
-         $data = $obj->demography(['2017-07-01', '2017-07-11'], ['pv', 'ecpm'], ['account'], ['age'], new \stdClass(), ['pv'], 'desc', 1, 10);
+    /*
+     * 消息通知测试
+     */
+    public function testMessage()
+    {
+        $obj = new MessageApi($this->api);
+        $messages = $obj->lists('SFST',0);
+        if (isset($images['list']) && $messages['list']->count()) {
+            $data = $messages['list'][0];
+            $message = $obj->read($data->getMid(), 'SFST');
+            $this->assertEquals(1, $message['success']);
+        }
+    }
 
-         if (isset($data['rows'])) {
-             $this->assertEquals(10, $data['rows']);
-         }
-     }
-     public function testEffect()
-     {
-         $obj = new InsightApi($this->api);
-         $data = $obj->effect(['2017-07-01', '2017-07-11'], ['pv', 'ecpm'], ['account'], ['account', 'date'], new \stdClass(), ['pv'], 'desc', 1, 10);
-         if (isset($data['rows'])) {
-             $this->assertEquals(10, $data['rows']);
-         }
-     }
+    /*
+     * 数据统计测试
+     */
+    public function testEffect()
+    {
+        $obj = new InsightApi($this->api);
+        $data = $obj->effect(['2017-07-01', '2017-07-11'], ['pv', 'ecpm'], ['account'], ['account', 'date'], new \stdClass(), ['pv'], 'desc', 1, 10);
+        if (isset($data['rows'])) {
+            $this->assertEquals(10, $data['rows']);
+        }
+    }
 
-     public function testLayer()
-     {
-         $obj = new InsightApi($this->api);
-         $data = $obj->layer(['2017-07-01', '2017-07-11'], ['second_pv', 'second_layer_pv_rate'], ['account'], ['account', 'date'], ['account_id' => '123'], ['second_pv'], 'desc', 1, 10);
-         if (isset($data['page'])) {
-             $this->assertEquals(1, $data['page']);
-         }
-     }
 
-     public function testAppCategory()
-     {
-         $obj = new AppApi($this->api);
-         $data = $obj->category();
-         $this->assertTrue(is_array($data));
-     }
-
-     public function testAppList()
-     {
-         $obj = new AppApi($this->api);
-         $data = $obj->lists();
-         //var_dump($data);exit;
-         $this->assertEquals(10, $data['page_size']);
-     }
-
-     public function testAppUpload()
-     {
-         $this->api->getApiRequest()->setTimeout(30);
-         $obj = new AppApi($this->api);
-         $data = $obj->upload(1, "https://itunes.apple.com/cn/app/dong-qiu-di-zhuan-ye-quan/id766695512?ls=1&mt=8");
-         $this->assertEquals(0, $data['errcode']);
-     }
 
 
 }
