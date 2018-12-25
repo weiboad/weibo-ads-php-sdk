@@ -12,7 +12,6 @@ use WeiboAd\Exception\ApiException;
 class ApiRequest
 {
     const API_BASE_URL = "https://api.biz.weibo.com/";
-    //const API_BASE_URL = "http://10.222.57.182:19001/";
 
     const HTTP_CODE_OK = 200;
 

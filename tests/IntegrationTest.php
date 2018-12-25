@@ -32,7 +32,6 @@ class IntegrationTest extends AbstractTestCase
     {
         parent::setUp();
         $this->api = new Api('app_id_test', 'app_secret_test', '1a581e6debf774d7aeec48939b82d737fb7c10106dd45074ae9402bc2b72a37d5c224ca137a042a632fd56d9a1e09cec399aa641ae2cb327ccc25111c534c76d');
-//        $this->api = new Api('app_id_test', 'app_secret_test', 'aaa9bfa8883732061902fd24b5ca5272');
     }
 
 
@@ -95,15 +94,6 @@ class IntegrationTest extends AbstractTestCase
 
 
 
-    /*
-     * 资产测试
-     */
-    public function testAsset()
-    {
-        $obj = new AssetsApi($this->api);
-        $Assets = $obj->asset();
-        $this->assertEquals("0.00", $Assets['real_time_consume']);
-    }
 
     /*
         * 测试账户
@@ -117,6 +107,9 @@ class IntegrationTest extends AbstractTestCase
          $account = $obj->budget("100.00");
          $this->assertEquals(1, $account['configured_status']);
          $this->assertEquals(272999, $account['id']);
+
+         $Assets = $obj->asset();
+         $this->assertEquals("0.00", $Assets['real_time_consume']);
      }
 
     /*

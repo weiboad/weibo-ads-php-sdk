@@ -2,7 +2,7 @@
   <testsuites>
     <testsuite name="Weibo AdApi">
       <directory>tests/</directory>
-      <exclude>tests/IntegrationTest.php</exclude>
+      <!--<exclude>tests/IntegrationTest.php</exclude>-->
     </testsuite>
   </testsuites>
   <filter>
