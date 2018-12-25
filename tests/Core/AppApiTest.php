@@ -12,7 +12,7 @@ class AppApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/app/list?page=1&page_size=10', 'GET')->willReturn(['total' => 1]);
+        $apiRequest->method('call')->with('/apps?page=1&page_size=10', 'GET')->willReturn(['total' => 1]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $appApi = new AppApi($api);
         $r = $appApi->lists();
@@ -35,7 +35,7 @@ class AppApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/app/category', 'GET')->willReturn([]);
+        $apiRequest->method('call')->with('/apps/category', 'GET')->willReturn([]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $appApi = new AppApi($api);
         $r = $appApi->category();

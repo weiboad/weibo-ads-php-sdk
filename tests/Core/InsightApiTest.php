@@ -41,4 +41,16 @@ class InsightApiTest extends AbstractTestCase
         $data = $obj->layer(['2017-07-01', '2017-07-11'], ['second_pv', 'second_layer_pv_rate'], ['account'], ['account', 'date'], ['account_id' => '123'], ['second_pv'], 'desc', 1, 10);
         $this->assertEquals(10, $data['rows']);
     }
+
+
+    public function testGraph()
+    {
+        $api = $this->getMockApi();
+        $apiRequest = $this->getMockApiRequest();
+        $apiRequest->method('call')->with('/insights/graph?data={"time_interval":["2017-07-01","2017-07-11"],"order_by":["acpe"],"granularity":["campaign","date"],"dimension":["campaign"],"page":1,"rows":10,"field":["pv","bhv","ecpm","acpe"],"param":{"campaign_id":[123]},"order_mode":"desc"}', 'GET')->willReturn(['rows' => 10]);
+        $api->method("getApiRequest")->willReturn($apiRequest);
+        $obj = new InsightApi($api);
+        $data = $obj->graph(['2017-07-01', '2017-07-11'], ["pv","bhv","ecpm","acpe"], ['campaign'], ['campaign', 'date'], ['campaign_id' => [123]], ['acpe'], 'desc', 1, 10);
+        $this->assertEquals(10, $data['rows']);
+    }
 }

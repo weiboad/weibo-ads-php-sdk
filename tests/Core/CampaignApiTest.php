@@ -14,7 +14,7 @@ class CampaignApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/campaigns/info/1', 'GET')->willReturn(['id' => 1]);
+        $apiRequest->method('call')->with('/campaigns/1', 'GET')->willReturn(['id' => 1]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $campaignApi = new CampaignApi($api);
         $r = $campaignApi->read(1);
@@ -25,7 +25,7 @@ class CampaignApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/campaigns/search?page=1&page_size=10&name=campaign_title', 'GET')->willReturn(['list' =>['id' => 1]]);
+        $apiRequest->method('call')->with('/campaigns?page=1&page_size=10&name=campaign_title', 'GET')->willReturn(['list' =>['id' => 1]]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $campaignApi = new CampaignApi($api);
         $r = $campaignApi->lists('campaign_title');
@@ -75,10 +75,10 @@ class CampaignApiTest extends AbstractTestCase
     {
         $api = $this->getMockApi();
         $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/campaigns/1', 'PUT')->willReturn(['id' => 1, 'name' => 'campaign_title', 'configure_status' => 0, 'effective_status' => 0]);
+        $apiRequest->method('call')->with('/campaigns/status/1', 'PUT')->willReturn(['id' => 1, 'name' => 'campaign_title', 'configuredStatus' => 1]);
         $api->method("getApiRequest")->willReturn($apiRequest);
         $campaignApi = new CampaignApi($api);
         $r = $campaignApi->updateStatus(1, ConfiguredStatus::PAUSE);
-        $this->assertEquals(0, $r->getConfiguredStatus());
+        $this->assertEquals(1, $r->getConfiguredStatus());
     }
 }

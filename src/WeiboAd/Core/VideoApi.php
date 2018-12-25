@@ -72,7 +72,7 @@ class VideoApi extends AbstractApi
         return new Video($data);
     }
 
-    /**
+    /*
      * 视频上传初始化
      * @param $name
      * @param $fileMD5
@@ -90,7 +90,7 @@ class VideoApi extends AbstractApi
         return $data;
     }
 
-    /**
+    /*
      * 视频分片上传
      * @param $fileToken
      * @param $fileMD5

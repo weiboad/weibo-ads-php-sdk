@@ -14,7 +14,7 @@ class ImageApi extends AbstractApi
 {
     const URI_READING = "/image";
     const URI_LIST    = "/image/list";
-    const URI_CREATE  = "/image";
+    const URI_CREATE  = "/openapi/image";
 
 
     /**
@@ -47,7 +47,7 @@ class ImageApi extends AbstractApi
         return $data;
     }
 
-    /**
+    /*图片上传
      * @param $name
      *
      * get the handler with fopen function
