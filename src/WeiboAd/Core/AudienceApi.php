@@ -12,14 +12,14 @@ use WeiboAd\Collection;
 class AudienceApi extends AbstractApi
 {
 
-    const URI_READING = "/audiences/info/%d";
-    const URI_LIST    = "/audiences/list";
+    const URI_READING = "/audiences/%d";
+    const URI_LIST    = "/audiences";
     const URI_CREATE  = "/audiences";
     const URI_UPLOAD  = "/audiences/upload";
-    const URI_DELETE  = "/audiences";
+    const URI_DELETE  = "/audiences/%d";
     const URI_SET_COVERAGE = '/audiences/set_coverage';
 
-    /**
+    /*创建受众数据包
      * @param $name
      * @param $dataSource
      * @param $fileId
@@ -42,7 +42,7 @@ class AudienceApi extends AbstractApi
         return new Audience($data);
     }
 
-    /**
+    /*
      * @param $dataFormat
      * @param $fileStream
      * @param $isMd5
@@ -58,7 +58,7 @@ class AudienceApi extends AbstractApi
         return $this->api->getApiRequest()->call(self::URI_UPLOAD, 'POST', [], $multiData);
     }
 
-    /**
+    /*受众读取数据包
      * @param $audienceId
      * @return Audience
      */
@@ -69,7 +69,7 @@ class AudienceApi extends AbstractApi
         return new Audience($data);
     }
 
-    /**
+    /*受众数据包列表
      * @param string $name
      * @param string $status
      * @param string $dataSource
@@ -101,13 +101,13 @@ class AudienceApi extends AbstractApi
         return $data;
     }
 
-    /**
+    /*受众删除数据包
      * @param $audienceId
      * @return mixed
      */
     public function delete($audienceId)
     {
-        $scheme = self::URI_DELETE . "?id=" . $audienceId;
+        $scheme = sprintf(self::URI_DELETE, $audienceId);
         return $this->api->getApiRequest()->call($scheme, 'DELETE');
     }
 

@@ -23,7 +23,7 @@ class ApiException extends Exception
             $message = $data['error']['message'];
             return parent::__construct($message, $data['error']['code']);
         } else {
-            return parent::__construct("Bad request with unknown reason", $errorCode);
+            return parent::__construct(json_encode($data), $errorCode);
         }
     }
 }

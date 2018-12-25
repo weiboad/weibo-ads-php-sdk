@@ -13,11 +13,12 @@ class AccountApi extends AbstractApi
 {
 
     const URI_READING = "/account";
+    const URI_BUDGET = "/account/budget";
     const URI_ASSET = "/account/asset";
     const URI_BUDGET = "/account/budget";
 
-    /**
-     * @return Account
+    /*获取广告账户信息
+     * return Account;
      */
     public function read()
     {
@@ -25,8 +26,18 @@ class AccountApi extends AbstractApi
        return new Account($data);
     }
 
-    /**
-     * @return mixed
+    /*获取日限额
+     * return mixed;
+     */
+    public function budget($spendCap)
+    {
+        $scheme = self::URI_BUDGET;
+        $putData = ['spend_cap' => $spendCap];
+        return  $this->api->getApiRequest()->call($scheme, 'PUT', $putData);
+    }
+
+    /* 获取账号资产
+     * return mixed
      */
     public function asset()
     {

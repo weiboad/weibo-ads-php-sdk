@@ -13,7 +13,7 @@ class InsightApi extends AbstractApi
     const URI_LAYER      = "/insights/layer";
     const URI_GRAPH      = "/insights/graph";
 
-    /**
+    /*按人群统计分析
      * @param array $timeInterval
      * @param array $field
      * @param array $dimension
@@ -44,7 +44,7 @@ class InsightApi extends AbstractApi
         return $data;
     }
 
-    /**
+    /*按效果统计分析
      * @param array $timeInterval
      * @param array $field
      * @param array $dimension
@@ -74,7 +74,7 @@ class InsightApi extends AbstractApi
         return $data;
     }
 
-    /**
+    /*二次传播数据统计
      * @param array $timeInterval
      * @param array $field
      * @param array $dimension
@@ -105,8 +105,7 @@ class InsightApi extends AbstractApi
         return $data;
     }
 
-    /**
-     * 获取实时数据
+    /*图标数据
      * @param array $timeInterval
      * @param array $field
      * @param array $dimension

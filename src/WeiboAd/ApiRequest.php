@@ -86,7 +86,9 @@ class ApiRequest
 
         $options =  [
             "http_errors" => false,
-            'headers'     => ['Authorization' => 'Bearer ' . $this->api->getToken()]
+            'headers'     => ['Authorization' => 'Bearer ' . $this->api->getToken(),
+                    'Accept'=> "application/json,application/text+gw2.0"
+                ]
         ];
         if ($body) {
             $options['body'] = $body;
