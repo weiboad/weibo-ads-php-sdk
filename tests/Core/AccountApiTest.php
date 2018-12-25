@@ -44,16 +44,6 @@ class AccountApiTest extends AbstractTestCase
         $this->assertEquals("9.19", $r['real_time_consume']);
     }
 
-    public function testBudget()
-    {
-        $api = $this->getMockApi();
-        $apiRequest = $this->getMockApiRequest();
-        $apiRequest->method('call')->with('/account/budget', 'PUT')->willReturn(['id' => 1]);
-        $api->method("getApiRequest")->willReturn($apiRequest);
-        $accountApi = new AccountApi($api);
-        $r = $accountApi->budget(100);
-        $this->assertEquals(1, $r->getId());
-    }
 
 
 }
